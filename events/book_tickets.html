@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<title>Formula 1: The world Championship</title>
+<head>
+  <link rel="stylesheet" href='\CSS\book_tickets.css'>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
+        </style>
+</head>
+
+<header> 
+
+
+</header>
+
+<top>
+<img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class="center">
+
+<nav>
+  <li><a class = "non-active" href = "\index.html">Home</a></li>
+  <li><a class = "non-active" href= #login> Login/Register </a></li>
+  <li><a class = "non-active" href="\make_event.html">Create or edit an event</a></li>
+  <li  id=current_tab><a>Purchase tickets</a></li>
+  <li><a class = "non-active" href="\view_previous_purchases.html">View previously purchased tickets</a></li>
+      
+        
+</nav>
+</top>
+
+
+<body>
+<!-- header -->
+
+<h1> Ticket bookings</h1>
+
+<form action="/action_page.php"
+oninput="price.value=parseInt(tickets.value)*200">
+
+  <label for="b_ename">Event name:</label><br>
+  <select id="b_ename" name="b_ename">
+    <option value="Driver_meet">Driver meet</option>
+    <option value="Subsonica_preformance">Subsonica preformance</option>
+    <option value="Streets_of_monza">Streets of Monza</option>
+  </select><br>
+  
+  <label for="tickets">Number of tickets</label><br>
+  <input  type="number" id="tickets" name ="tickets"><br>
+  
+  <label for="price">Total price:</label><br>
+  <label for="price">£</label>
+  <output name="price" for = "tickets">0</output><br>
+
+  <a href = "https://www.paypal.com/au/home"><input type="button" value="Purchase now"></a><br>
+
+  <lable for="Purchase now">You will be taken to a third party website <br> to complete transaction</lable>
+
+
+</form>
+
+ 
+<!-- footer -->
+
+<div class="frow">
+    <div class="fcolumn">
+      <div class="fcard">
+        <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021manual/2021ItalianGPManuals/Sunday/ITAF1-Tech-Tuesday.jpg.transform/6col/image.jpg" 
+        alt="Technology" style="width:100%">
+        <div class="fcontainer">
+          <p><button class="button">Technology</button></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="fcolumn">
+      <div class="fcard">
+        <img src="https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/Tag%20collections/Other/btg%20tag%20hub%20image.jpg.transform/fullbleed/image.jpg" 
+        alt="Meet the drivers" style="width:100%">
+        <div class="fcontainer">
+          <p><button class="button">Meet the drivers</button></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="fcolumn">
+      <div class="fcard">
+        <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021manual/2021ItalianGPManuals/Sunday/ita_2021_F1_Winners_Losers.jpg.transform/9col/image.jpg" 
+        alt="Power Rankings" style="width:100%">
+        <div class="fcontainer">
+          <p><button class="button">Power Rankings</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<footer>
+    Copyright @Kenzie Haigh
+</footer>
+</body>
+</html>

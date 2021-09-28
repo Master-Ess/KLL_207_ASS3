@@ -1,29 +1,21 @@
-from flask import Flask
+from flask import *
 from datetime import datetime
 import re
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='../KLL_207_ASS3')
 
+ 
+# currently no operation - now there is 
 
-# currently no operation
+data = str(5)
 
 @app.route("/")
-def home():
-    return "Hello, Flask!"
 
-@app.route("/hello/<name>")
 
-def hello_there(name):
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
 
-    
-    match_object = re.match("[a-zA-Z]+", name)
 
-    if match_object:
-        clean_name = match_object.group(0)
-    else:
-        clean_name = "Friend"
+def index():
+    return render_template('index.html', data=data)
 
-    content = "Hello there, " + clean_name + "! It's " + formatted_now
-    return content
+if __name__ == "__main__":
+    app.run(debug=True)   

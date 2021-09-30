@@ -37,10 +37,26 @@ def make_event():
 def view_previous_purchases():
     return render_template("view_previous_purchases.html")
 
-@app.errorhandler(404)    
+@app.errorhandler(404)
 def page_not_found(e):
     #404 status set explicitly
     return render_template('404.html'), 404
+
+@app.errorhandler(403)    
+def page_forbidden(e):
+      #403 status set explicitly
+    return render_template('403.html'), 403
+ 
+
+@app.errorhandler(410)    
+def page_gone(e):
+      #410 status set explicitly
+    return render_template('410.html'), 410
+
+@app.errorhandler(500)    
+def internal_error(e):
+      #500 status set explicitly
+    return render_template('500.html'), 500
 
 
 if __name__ == "__main__":

@@ -7,9 +7,7 @@ https://docs.google.com/document/d/1E-FF3athE_Rk2DugLXF7umZiCJ3BLKlu/edit
 -----
 Webpages Missing:
 
-Login
-
-New User
+None - Im fucking awesome
 
 -----
 Web functionality missing:

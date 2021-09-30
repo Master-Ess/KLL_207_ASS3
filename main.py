@@ -1,9 +1,12 @@
+from flask_login import LoginManager
 from flask import *
 from datetime import datetime
 from time import *
 from datetime import *
+
 import os
 import sqlite3
+
 
 app = Flask(__name__,template_folder='../KLL_207_ASS3')
 
@@ -15,7 +18,7 @@ current_time = now.strftime("%H:%M:%S")
 time = str("Current Time =" + current_time)
 
 
-
+login_manager = LoginManager()
 
 @app.route("/")
 

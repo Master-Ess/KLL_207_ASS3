@@ -18,12 +18,29 @@ time = str("Current Time =" + current_time)
 #index and home functions need to be the same since they are effectivly links to the same page, fix needs to be found
 
 @app.route("/")
+
+
+
 def index():
+
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    time = str("Current Time =" + current_time)
+
     return render_template('index.html', data=time) 
+
+
 
 @app.route("/home")
 def home():
-    return render_template('index.html', data=time)
+    
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    time = str("Current Time =" + current_time)
+
+    return render_template('index.html', data=time) 
 
 @app.route("/book_tickets")
 def book_ticket():

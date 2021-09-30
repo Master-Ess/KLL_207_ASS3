@@ -311,6 +311,7 @@ html a:hover{
 }
 
 h1{
+  margin-top: 0;
   color: #000;
   text-align: left;
 }
@@ -321,7 +322,7 @@ input[type=text], select {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -344,6 +345,7 @@ hr.topthird {
 
 .signin{
   font-family: "Titillium Web";
+  
   background-color: rgb(255, 6, 0);
   box-shadow: none;
   padding: 5pt;

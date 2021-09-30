@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <title>Formula 1: The world Championship</title>
-<head>
+<head >
     <link rel="stylesheet" href='static\login.css'>
 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login.css') }}"> 
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
+       
+        
         </style>
 </head>
 
@@ -43,13 +45,13 @@
         <form>
             <label for="Username">Email or Username</label><br>
             <div class = entry> 
-                <input type="text" id="Username" name="Username"> 
+                <input type="text" id="Username" name="Username" placeholder="Enter your username"> 
             </div><br>
             <label for="password">Password</label><br>
             <div class = entry> 
-                <input type="text" id="password" name="password"> 
-            </div><br>
-            <p id = "FP"> <b>Forgotten password?</b></p><br>
+                <input type="text" id="password" name="password" placeholder="Enter your password"> 
+            </div>
+            <p id = "FP"> <b>Forgotten password?</b></p>
             <input class = "signin" type="submit" value="SIGN IN">
           </form>       
           <label id = "yet">Dont have an account yet?</label> &nbsp;&nbsp;&nbsp;

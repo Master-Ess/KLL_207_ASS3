@@ -1,8 +1,12 @@
+#home_tab:link{
+  color:rgb(255, 6, 0) !important
+}
+
 html #toplogo {
   background-color: rgb(255, 6, 0);
-  width: 100%;
-  padding-left:  42%;
-  padding-right: 42%;
+  width: 10%;
+  padding-left:  45%;
+  padding-right: 45%;
   padding-top: 1%;
   padding-bottom: 1%;
   position: relative;
@@ -267,160 +271,87 @@ html body{
 }
 
 
-html #home_tab {
-  background-color: white;
-  color:rgb(255, 6, 0) ;  
-}
+h
 
 html #tertiary_image{
   margin-bottom: 5pt;
 }
 
-.sorting{
-  text-align: center;
-}
 
-/* .cx-reset-button{
-  visibility: hidden;
-} */
-
-/* buttons  */
-
-#driver-button{
-  
-  display:none
-  
-}    
-
-.cx-driver-button{
-  padding-left: 10pt;
-}
-
-#driver-button:checked 
-~ #testing_lable{
-  display: initial;
-}
-
-#driver-button:checked
-~ #tertiary_artice{
-  display:none;
-}
-
-#driver-button:checked
-~ #secondary_article{
-  display:none;
+html .mcolumn {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
 }
 
 
-#driver-button:checked 
-~ label 
-.cx-driver-button{color: rgb(255, 6, 0);}
-
-#driver-button:checked
-~ .cx-reset-button{
-  visibility: visible;
+html .mrow:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 
-
-/* 
-next button */
-
-#activate-div{
-  display:none
-}    
-
-#activate-div:checked 
-~ #testing_lable{
-  display: none;
-}
-
-#activate-div:checked
-~ #tertiary_artice{
-  display:none;
-}
-
-#activate-div:checked
-~ #secondary_artice{
-  display:initial;
-}
-
-
-#activate-div:checked 
-~ label 
-.my-div{color: rgb(255, 6, 0);}
-
-#activate-div:checked
-~ .cx-reset-button{
-  visibility: visible;
-}
-
-/* 
-next button */
-
-#music-button{
-  display:none
-}    
-
-#music-button:checked 
-~ #testing_lable{
-  display: none;
-}
-
-#music-button:checked
-~ #tertiary_artice{
-  display:initial;
-}
-
-#music-button:checked
-~ #secondary_article{
-  display:none;
-}
-
-
-#music-button:checked 
-~ label 
-.cx-music-button{color: rgb(255, 6, 0);}
-
-#music-button:checked
-~ .cx-reset-button{
-  visibility: visible;
-}
-
-/* 
-next button */
-
-#reset-button{
-  display:none
-}    
-
-#reset-button:checked 
-~ #testing_lable{
-  display: initial;
-}
-
-#reset-button:checked
-~ #tertiary_artice{
-  display:initial;
-}
-
-#reset-button:checked
-~ #secondary_article{
-  display:initial;
-}
-
-@media screen and (max-width: 1250px) {
-  .fcolumn {
+@media screen and (max-width: 600px) {
+  html .mcolumn {
     width: 100%;
-    display: block;
-  }
-
-  .fcard{
-    width: 500px;
   }
 }
 
+html a:link {
+  color: white 
+}
+
+html a:visited{
+	color: white 
+}
+
+html a:hover{
+	color:rgb(255, 6, 0)
+}
+
+h1{
+  color: #000;
+  text-align: left;
+}
 
 
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
+hr.topthird {
+  border-top: 0.5px solid rgb(208,208,210);
+  margin-bottom: 20pt;
+}
 
+#FP{
+  text-align: right;
+  text-decoration: underline rgb(255, 6, 0);
+  margin-bottom: 15pt;
+}
+
+#reg{
+  text-decoration: underline rgb(255, 6, 0);
+  margin-bottom: 15pt;
+}
+
+.signin{
+  font-family: "Titillium Web";
+  background-color: rgb(255, 6, 0);
+  box-shadow: none;
+  padding: 5pt;
+  padding-left: 25pt;
+  padding-right: 25pt;
+  color: white;
+  border: none;
+  border-radius: 5pt;
+  text-size-adjust: larger;
+  margin-bottom: 15pt;
+}

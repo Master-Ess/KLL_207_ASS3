@@ -2,12 +2,9 @@
 <html>
 <title>Formula 1: The world Championship</title>
 <head>
+    <link rel="stylesheet" href='static\login.css'>
 
-  <link rel="stylesheet" href='static\reporter.css'>
-
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='reporter.css') }}"> 
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login.css') }}"> 
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
@@ -23,11 +20,11 @@
 <img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class="center">
 
 <nav>
-  <li><a class = "non-active" href = "\">Home</a></li>
-  <li><a class = "non-active" href= login> Login/Register </a></li>
-  <li><a class = "non-active" href="\make_event">Create or edit an event</a></li>
-  <li><a class = "non-active" href="\book_tickets">Purchase tickets</a></li>
-  <li><a class = "non-active" href="\view_previous_purchases">View previously purchased tickets</a></li>
+    <li id=home_tab><a href=#home> Home </a></li>
+    <li><a href=#login> Login/Register </a></li>
+    <li><a href=#Events> Events </a></li>
+    <li><a href=#race> Race </a></li>
+    <li><a href=#Race_stats> Race stats </a></li>
         
 </nav>
 </top>
@@ -36,16 +33,29 @@
 <body>
 <!-- header -->
 
-<div class = "container" > 
-  <div id = "info">
-  <h2> 404 - Page not found</h2>
-  <p>Sorry the page you were looking for doesnt seem to exist, a bit like Mazepin's talent</p> 
-  <div id = "back_home">
+<div class="mrow"> 
+    <div class="mcolumn">    
+        <!--  empty     -->
+    </div>
+    <div class="mcolumn">  
+        <h1><b>SIGN IN</b></h1>
+        <hr class="topthird">
+        <form>
+            <label for="Username">Email or Username</label><br>
+            <div class = entry> 
+                <input type="text" id="Username" name="Username"> 
+            </div><br>
+            <label for="password">Password</label><br>
+            <div class = entry> 
+                <input type="text" id="password" name="password"> 
+            </div><br>
+            <p id = "FP"> <b>Forgotten password?</b></p><br>
+            <input class = "signin" type="submit" value="SIGN IN">
+          </form>       
+          <label id = "yet">Dont have an account yet?</label> &nbsp;&nbsp;&nbsp;
+          <label id = "reg"> <b>Register with F1</b></label>
+    </div>
 
-    <a href = "\"><p id = "main_button">Home</p></a>
-
-  </div>
-</div>
 </div>
  
 <!-- footer all classes have f**** to indicate footer class-->

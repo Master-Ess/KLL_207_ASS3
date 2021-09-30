@@ -1,6 +1,5 @@
 from flask import *
 from datetime import datetime
-import re
 from time import *
 from datetime import *
 import os
@@ -9,7 +8,6 @@ import sqlite3
 app = Flask(__name__,template_folder='../KLL_207_ASS3')
 
  
-# currently no operation - now there is 
 
 now = datetime.now()
 
@@ -17,7 +15,7 @@ current_time = now.strftime("%H:%M:%S")
 time = str("Current Time =" + current_time)
 
 
-#index and home functions need to be the same since they are effectivly links to the same page, fix needs to be found
+
 
 @app.route("/")
 
@@ -30,17 +28,6 @@ def index():
 
     return render_template('index.html', data=time) 
 
-
-
-@app.route("/home")
-def home():
-    
-    now = datetime.now()
-
-    current_time = now.strftime("%H:%M:%S")
-    time = str("Current Time =" + current_time)
-
-    return render_template('index.html', data=time) 
 
 @app.route("/book_tickets")
 def book_ticket():

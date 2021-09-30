@@ -58,8 +58,14 @@ def create_account():
         if checkpass1 == checkpass2:
             dpass = checkpass1
 
-        
+        current = sqlite3.connect('master.db')
 
+        cur = current.cursor()
+
+        cur.execute("INSERT INTO Users ('Title', 'First Name', 'Last Name', 'Password', 'DOB', 'Country', 'Email')  VALUES ('" + dtitle + "', '"+ dfname +"','"+dlname+"', '"+dpass+"', '"+ddob+"', '"+dcountry+"', '"+demail+"')")
+
+        current.commit()
+        current.close()
 
         return redirect(url_for("index"))
         

@@ -363,3 +363,7 @@ hr.topthird {
 width: 45%;
 }
 
+#error_message{
+  color:rgb(255, 6, 0);
+  text-align: center;
+}

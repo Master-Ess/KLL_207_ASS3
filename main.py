@@ -54,18 +54,23 @@ def create_account():
         demail = request.form['email']
         checkpass1 = request.form['pass']
         checkpass2 = request.form['cpass']
-        
+
         if checkpass1 == checkpass2:
             dpass = checkpass1
+        
+        if dtitle == "select" or dfname == None or dlname == None or ddob == None or dcountry == "select" or demail == None or dpass == None:
 
-        current = sqlite3.connect('master.db')
+            return render_template('create_account.html', data = "Please fill in all boxes before entry")
+        else:
 
-        cur = current.cursor()
+            current = sqlite3.connect('master.db')
 
-        cur.execute("INSERT INTO Users ('Title', 'First Name', 'Last Name', 'Password', 'DOB', 'Country', 'Email')  VALUES ('" + dtitle + "', '"+ dfname +"','"+dlname+"', '"+dpass+"', '"+ddob+"', '"+dcountry+"', '"+demail+"')")
+            cur = current.cursor()
 
-        current.commit()
-        current.close()
+            cur.execute("INSERT INTO Users ('Title', 'First Name', 'Last Name', 'Password', 'DOB', 'Country', 'Email')  VALUES ('" + dtitle + "', '"+ dfname +"','"+dlname+"', '"+dpass+"', '"+ddob+"', '"+dcountry+"', '"+demail+"')")
+
+            current.commit()
+            current.close()
 
         return redirect(url_for("index"))
         

@@ -16,7 +16,7 @@ Login
 
 Logout
 
-New User
+New User --> Done
 
 Buying Tickets
 

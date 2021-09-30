@@ -37,6 +37,10 @@ def make_event():
 def view_previous_purchases():
     return render_template("view_previous_purchases.html")
 
+@app.errorhandler(404)    
+def page_not_found(e):
+    #404 status set explicitly
+    return render_template('404.html'), 404
 
 
 if __name__ == "__main__":

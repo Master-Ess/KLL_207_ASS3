@@ -41,6 +41,31 @@ def make_event():
 def view_previous_purchases():
     return render_template("view_previous_purchases.html")
 
+
+@app.route("/create_account", methods=["POST", 'GET'])
+def create_account():
+    if request.method == "POST":
+
+        dtitle = request.form['usertitle']
+        dfname = request.form['fname']
+        dlname = request.form['lname']
+        ddob = request.form['DOB']
+        dcountry = request.form['country']
+        demail = request.form['email']
+        checkpass1 = request.form['pass']
+        checkpass2 = request.form['cpass']
+        
+        if checkpass1 == checkpass2:
+            dpass = checkpass1
+
+        
+
+
+        return redirect(url_for("index"))
+        
+    else:
+        return render_template('create_account.html')
+
 @app.errorhandler(404)
 def page_not_found(e):
     #404 status set explicitly

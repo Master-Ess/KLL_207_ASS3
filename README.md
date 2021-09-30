@@ -11,10 +11,6 @@ Login
 
 New User
 
-404
-
-500
-
 -----
 Web functionality missing:
 

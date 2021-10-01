@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from werkzeug.wrappers.response import Response
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -19,7 +20,7 @@ def login():
             if check_password_hash(user.password, password):
                 print('Logged in successfully!')
                 login_user(user, remember=True)
-                return redirect(url_for('views.index'))
+                return render_template('index.html', response='User logged in')
             else:
                 print('Incorrect password, try again.')
         else:
@@ -49,21 +50,27 @@ def sign_up():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            print('Email already exists.')
+            return render_template("create_account.html", user=current_user, data='Email already exists.')
         elif len(email) < 4:
-            print('Email must be greater than 3 characters.')
+            return render_template("create_account.html", user=current_user, data='Email must be greater than 3 characters.')
         elif len(first_name) < 2:
-            print('First name must be greater than 1 character.')
+            return render_template("create_account.html", user=current_user, data='First name must be greater than 1 character.')
+        elif len(last_name) < 2:
+            return render_template("create_account.html", user=current_user, data='Last name must be greater than 1 character.')
+        elif len(dateofbirth) < 9:
+            return render_template("create_account.html", user=current_user, data='Please input a date of birth')         
+        elif title == "select":
+            return render_template("create_account.html", user=current_user, data='Please Select a Title')
+        elif country == "select":
+            return render_template("create_account.html", user=current_user, data='Please Select a Country')    
         elif password1 != password2:
-            print('Passwords don\'t match.')
-        elif len(password1) < 7:
-            print('Password must be at least 7 characters.')
+            return render_template("create_account.html", user=current_user, data="Passwords don't match.")
         else:
             new_user = User(email=email, title=title, first_name=first_name, last_name=last_name, dateofbirth=dateofbirth, country=country, password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             print('Account created!')
-            return redirect(url_for('views.index'))
+            return render_template('index.html', response='Account created and user logged in')
 
     return render_template("create_account.html", user=current_user)

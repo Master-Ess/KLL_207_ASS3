@@ -1,12 +1,15 @@
 
 from flask import *
-from flask_login import *
+from flask_login import LoginManager
+from flask_sqlalchemy import *
 from datetime import datetime
 from time import *
 from datetime import *
 
 import os
 import sqlite3
+
+app.config['SECRET_KEY'] = 'thisissecret'
 
 
 app = Flask(__name__,template_folder='../KLL_207_ASS3')
@@ -20,6 +23,11 @@ time = str("Current Time =" + current_time)
 
 
 login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin,db.model):
+    id = db.Column(db.In)
+
 
 @app.route("/")
 

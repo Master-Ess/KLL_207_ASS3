@@ -1,5 +1,6 @@
-from flask_login import LoginManager
+
 from flask import *
+from flask_login import *
 from datetime import datetime
 from time import *
 from datetime import *
@@ -30,6 +31,10 @@ def index():
     time = str("Current Time =" + current_time)
 
     return render_template('index.html', data=time) 
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 
 @app.route("/book_tickets")

@@ -12,12 +12,6 @@ None - Im fucking awesome
 -----
 Web functionality missing:
 
-Login
-
-Logout
-
-New User --> Done
-
 Buying Tickets
 
 Editing Events

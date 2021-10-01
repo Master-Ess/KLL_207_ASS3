@@ -1,7 +1,7 @@
 
 from flask import *
-from flask_login import LoginManager
-from flask_sqlalchemy import *
+from flask_login import LoginManager, UserMixin,login_required,logout_user
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from time import *
 from datetime import *
@@ -9,24 +9,26 @@ from datetime import *
 import os
 import sqlite3
 
-app.config['SECRET_KEY'] = 'thisissecret'
+from werkzeug.wrappers import response
+
+User = 0
 
 
 app = Flask(__name__,template_folder='../KLL_207_ASS3')
 
- 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
 time = str("Current Time =" + current_time)
 
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-class User(UserMixin,db.model):
-    id = db.Column(db.In)
 
 
 @app.route("/")
@@ -40,9 +42,56 @@ def index():
 
     return render_template('index.html', data=time) 
 
-@app.route("/login")
+@app.route("/login", methods=["POST", 'GET'])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
+        demail= request.form['Username']
+        dpassword = request.form['password'] 
+
+        current = sqlite3.connect('master.db')
+
+        cur = current.cursor()
+
+        
+        cur.execute("SELECT Password FROM Users WHERE Email = '"+ demail +"'")
+
+        rpassword = cur.fetchall()
+
+        rpassword=str(rpassword)
+        rpassword = rpassword.split("'")
+        rpassword = rpassword[1]
+        dpassword=str(dpassword)
+
+      
+
+        if rpassword != dpassword:
+            print("password incorrect")
+            return render_template("login.html", response="Email or Password is incorrect")
+        elif rpassword == dpassword:
+            print("password is correct")
+
+            cur.execute("SELECT UID FROM Users WHERE Email = '"+ demail +"'")
+
+            rUID = str(cur.fetchall())
+            rUID = rUID.split("(")
+            rUID= str(rUID[1])
+            rUID = rUID.split(",")
+            rUID= str(rUID[0])
+            
+
+
+        current.close()
+
+        return render_template('index.html', response = "Logged In") 
+        
+    else:
+        return render_template("login.html")
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
 
 
 @app.route("/book_tickets")
@@ -88,7 +137,7 @@ def create_account():
             current.commit()
             current.close()
 
-        return redirect(url_for("index"))
+        return render_template('login.html', response = "Account created, Please login") 
         
     else:
         return render_template('create_account.html')

@@ -42,17 +42,20 @@
     <div class="mcolumn">  
         <h1><b>SIGN IN</b></h1>
         <hr class="topthird">
-        <form>
-            <label for="Username">Username</label><br>
+        <form action="#" method = "post">
+
+          <p id ="response" >{{response}}</p>
+
+            <label for="Username">Email address</label><br>
             <div class = entry> 
                 <input type="text" id="Username" name="Username" placeholder="Enter your username"> 
             </div><br>
             <label for="password">Password</label><br>
             <div class = entry> 
-                <input type="text" id="password" name="password" placeholder="Enter your password"> 
+                <input type="text" id="password" name="password" style="-webkit-text-security: disc" placeholder="Enter your password"> 
             </div>
             <p id = "FP"> <b>Forgotten password?</b></p>
-            <input class = "signin" type="submit" value="SIGN IN">
+            <input class = "signin" type="submit"  value="SIGN IN">
           </form>       
           <label id = "yet">Dont have an account yet?</label> &nbsp;&nbsp;&nbsp;
           <label id = "reg"> <b><a id="CA" href=\create_account>Register with F1</a></b></label>

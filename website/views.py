@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
 from .models import Event
 from . import db
@@ -16,9 +16,29 @@ def index():
 def book_ticket():
     return render_template('book_tickets.html')
 
-@views.route("/make_event")
+@views.route("/make_event", methods=['GET', 'POST'])
 def make_event():
-    return render_template("make_event.html")
+    if request.method == 'POST':
+        print("got here")
+        ename = request.form.get('eventname')
+        ntickets = request.form.get('ntickets')
+        status = request.form.get('status')
+        DOE = request.form.get('DOE')
+        URL = request.form.get('URL')
+        cost = request.form.get('cost')
+        desc = request.form.get('desc')
+        location = request.form.get('location')
+        print("got here too")
+
+        
+        
+        new_event = Event(title=ename, data=desc, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location)
+        db.session.add(new_event)
+        db.session.commit()
+        print('Event created or Updated!')
+        return render_template('index.html', response='Event created or Updated')
+    
+    return render_template("new_create_event.html")
 
 @views.route("/view_previous_purchases")
 @login_required

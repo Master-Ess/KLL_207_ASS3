@@ -42,8 +42,11 @@
     <h1><b>CREATE OR EDIT EVENT</b></h1>
     
   </div>
+  <div class="mcolumn">
+    <p id = "error_message">{{data}}</p>
+  </div>
  </div>  
-<div class="mrow"> 
+<div class="mrow" id = "main"> 
   <div class="mcolumn">    
       <!--  empty     -->
   </div>
@@ -52,7 +55,7 @@
     
       
       <hr class="topthird">
-      <p id = "error_message">{{data}}</p>
+      
       <form name = "createeventform" action="#" method = "POST">
           <label for="eventname">Event Name</label><br>
           <div class = entry> 
@@ -101,6 +104,8 @@
             <input type="text" id="cost" name="cost" placeholder="$" maxlength="3"> 
         </div>
         <br>
+        <input id="submit-form" class = "hidden" for="createeventform" type="submit" value="SUBMIT" >
+      </form>
         <label for="desc">Event Description</label><br>
         
         <div class = entry> 
@@ -109,8 +114,8 @@
         
         
           <p>By clicking on submit, I agree that I have read and agree to the Terms and Conditions and Privacy Policy</p>
-          <input class = "register" type="submit" value="SUBMIT">
-        </form>
+          <label class = "register" for="submit-form" tabindex="0">SUBMIT</label><BR>
+       
       </div>       
     </div>
   </div>

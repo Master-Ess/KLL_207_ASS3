@@ -1,3 +1,4 @@
+from os import stat
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
 from .models import Event
@@ -17,9 +18,11 @@ def book_ticket():
     return render_template('book_tickets.html')
 
 @views.route("/make_event", methods=['GET', 'POST'])
+@login_required
 def make_event():
+    
     if request.method == 'POST':
-        print("got here")
+        
         ename = request.form.get('eventname')
         ntickets = request.form.get('ntickets')
         status = request.form.get('status')
@@ -28,11 +31,15 @@ def make_event():
         cost = request.form.get('cost')
         desc = request.form.get('desc')
         location = request.form.get('location')
-        print("got here too")
+        cur_user = str(current_user)
+        
+        
+        if ename == None or ntickets == None or status == "Select" or DOE == None or URL == None or cost == None or location == None:
+             return render_template("new_create_event.html", data = "Please fill in all boxes")
 
         
         
-        new_event = Event(title=ename, data=desc, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location)
+        new_event = Event(title=ename, data=desc, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
         db.session.add(new_event)
         db.session.commit()
         print('Event created or Updated!')

@@ -24,7 +24,7 @@ def login():
                 print('Incorrect password, try again.')
         else:
             print('Email does not exist.')
-
+    logout_user()
     return render_template("login.html", user=current_user)
 
 

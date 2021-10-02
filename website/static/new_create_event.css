@@ -376,3 +376,11 @@ textarea{
   font-family: "Titillium Web";
   resize: none;
 }
+
+.hidden{
+  display:none;
+}
+
+#main{
+  margin-bottom: 50pt;
+}

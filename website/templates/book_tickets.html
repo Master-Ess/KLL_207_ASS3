@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <title>Formula 1: The world Championship</title>
-<head>
-  <!-- <link rel="stylesheet" href='\CSS\book_tickets.css'> -->
+<head >
+    <link rel="stylesheet" href='static\book_tickets.css'>
 
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='book_tickets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='book_tickets.css') }}"> 
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
+       
+        
         </style>
 </head>
 
@@ -20,13 +22,12 @@
 <img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class="center">
 
 <nav>
-  <li><a class = "non-active" href = "\">Home</a></li>
-  <li><a class = "non-active" href="make_event">Create or edit an event</a></li>
-  <li  id=current_tab><a>Purchase tickets</a></li>
-  <li><a class = "non-active" href="view_previous_purchases">View previously purchased tickets</a></li>
-
-      
-        
+    <li id=home_tab><a href=\> Home </a></li>
+    <li><a href =""> Login/Register </a></li>
+    <li><a href=\make_event> Create or edit an event </a></li>
+    <li><a href=\book_tickets> Purchase tickets </a></li>
+    <li><a href=\view_previous_purchases>View previously purchased tickets</a></li>
+       
 </nav>
 </top>
 
@@ -34,34 +35,43 @@
 <body>
 <!-- header -->
 
-<h1> Ticket bookings</h1>
+<div class="mrow"> 
+    <div class="mcolumn">    
+        <!--  empty     -->
+    </div>
+    <div class="mcolumn">  
+        <h1><b>BOOK TICKETS</b></h1>
 
-<form action="/action_page.php"
-oninput="price.value=parseInt(tickets.value)*200">
+        
 
-  <label for="b_ename">Event name:</label><br>
-  <select id="b_ename" name="b_ename">
-    <option value="Driver_meet">Driver meet</option>
-    <option value="Subsonica_preformance">Subsonica preformance</option>
-    <option value="Streets_of_monza">Streets of Monza</option>
-  </select><br>
-  
-  <label for="tickets">Number of tickets</label><br>
-  <input  type="number" id="tickets" name ="tickets"><br>
-  
-  <label for="price">Total price:</label><br>
-  <label for="price">£</label>
-  <output name="price" for = "tickets">0</output><br>
+        <hr class="topthird">
+        <form action="#" method = "post">
 
-  <a href = "https://www.paypal.com/au/home"><input type="button" value="Purchase now"></a><br>
+          <p id ="response" >{{response}}</p>
 
-  <lable for="Purchase now">You will be taken to a third party website <br> to complete transaction</lable>
+            <label for="Username">Event Name</label><br>
+            <div class = entry>
+              
+                <select id="title" name="usertitle">
+                <option value="select">Select</option>
+                  
+                {% for ship in ships %}
+                <option value="select">{{ship.name}} - {{ship.crew}} - {{ship.weight}}</option>
+                {% endfor %}
 
+                </select>
+            </div><br>
+            <label for="password">Number of Tickets</label><br>
+            <div class = entry> 
+                <input type="text" id="password" name="password" style="-webkit-text-security: disc" placeholder="Enter your password"> 
+            </div><br>
+            <input class = "signin" type="submit"  value="PURCHASE">
+          </form>       
+    </div>
 
-</form>
-
+</div>
  
-<!-- footer -->
+<!-- footer all classes have f**** to indicate footer class-->
 
 <div class="frow">
     <div class="fcolumn">
@@ -87,15 +97,13 @@ oninput="price.value=parseInt(tickets.value)*200">
     <div class="fcolumn">
       <div class="fcard">
         <img src="https://www.formula1.com/content/dam/fom-website/manual/Misc/2021manual/2021ItalianGPManuals/Sunday/ita_2021_F1_Winners_Losers.jpg.transform/9col/image.jpg" 
-        alt="Power Rankings" style="width:100%">
+        alt="Power Ranking" style="width:100%">
         <div class="fcontainer">
           <p><button class="button">Power Rankings</button></p>
         </div>
       </div>
     </div>
   </div>
-
-
 
 <footer>
     Copyright @Kenzie Haigh

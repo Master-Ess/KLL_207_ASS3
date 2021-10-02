@@ -8,14 +8,29 @@ from . import db
 
 views = Blueprint('views', __name__)
 
-id = 0
-fname ="Login or Register"
-sname =""
-payload="login"
+class SpaceShip:
+    def __init__(self, name, crew, weight):
+        self.name = name
+        self.crew = crew
+        self.weight = weight
+
+spaceships=[
+    SpaceShip('Eagle', 100, 700),
+    SpaceShip('Round', 1002, 670),
+    SpaceShip('Black Bird', 550, 1000),
+    SpaceShip('Seagul', 13, 23400),
+    SpaceShip('Pingvin', 200, 12300),
+    SpaceShip('Austridge', 500, 11200)
+]
+
+
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
-    
+    id = 0
+    fname ="Login or Register"
+    sname =""
+    payload="login"
     if current_user.is_authenticated:
         id = current_user.id
         alldata = User.query.filter_by(id=id).first()
@@ -29,7 +44,7 @@ def index():
 
 @views.route("/book_tickets")
 def book_ticket():
-    return render_template('book_tickets.html' , first=fname, second=sname, payload=payload)
+    return render_template('book_tickets.html', ships=spaceships)
 
 @views.route("/make_event", methods=['GET', 'POST'])
 @login_required
@@ -52,16 +67,16 @@ def make_event():
 
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
             print("missing errors")
-            return render_template("create_event.html", data = "Please fill in all boxes" , first=fname, second=sname, payload=payload)
+            return render_template("create_event.html", data = "Please fill in all boxes")
 
         else:
             new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
             db.session.add(new_event)
             db.session.commit()
             print('Event created or Updated!')
-        return render_template('index.html', response='Event created or Updated' , first=fname, second=sname, payload=payload)
+        return render_template('index.html', response='Event created or Updated')
     
-    return render_template("create_event.html", first=fname, second=sname, payload=payload)
+    return render_template("create_event.html")
 
 @views.route("/view_event/<id>")
 def view_event(id):
@@ -80,12 +95,12 @@ def view_event(id):
 
     
 
-    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img , first=fname, second=sname, payload=payload)
+    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img)
 
 @views.route("/view_previous_purchases")
 @login_required
 def view_previous_purchases():
-    return render_template("view_previous_purchases.html", first=fname, second=sname, payload=payload)
+    return render_template("view_previous_purchases.html")
 
 
 

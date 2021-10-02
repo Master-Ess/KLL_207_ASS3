@@ -49,6 +49,23 @@ def make_event():
     
     return render_template("new_create_event.html")
 
+@views.route("/view_event")
+def view_event():
+
+    id = 1 #will need to dynamicly set later
+
+    alldat = Event.query.filter_by(id=id).first()
+    name = alldat.title
+    location = alldat.location
+    date = alldat.date
+    tickets = alldat.tickets
+    data = alldat.data
+    img = alldat.img
+
+    
+
+    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img)
+
 @views.route("/view_previous_purchases")
 @login_required
 def view_previous_purchases():

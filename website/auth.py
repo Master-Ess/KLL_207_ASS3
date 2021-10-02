@@ -21,9 +21,9 @@ def login():
                 login_user(user, remember=True)
                 return render_template('index.html', response='User logged in')
             else:
-                print('Incorrect password, try again.')
+               return render_template("login.html", response = 'Incorrect password, try again.')
         else:
-            print('Email does not exist.')
+            return render_template("login.html", response = 'Email does not exist.')
     logout_user()
     return render_template("login.html", user=current_user)
 

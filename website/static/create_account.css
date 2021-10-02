@@ -367,3 +367,23 @@ width: 45%;
   color:rgb(255, 6, 0);
   text-align: center;
 }
+
+.signin{
+  font-family: "Titillium Web";
+  float: right;
+  
+  box-shadow: none;
+  padding: 5pt;
+  padding-left: 25pt;
+  padding-right: 25pt;
+  color: rgb(255, 6, 0) !important;
+  border: none;
+  border-radius: 5pt; 
+  margin-bottom: 15pt;  
+  text-decoration: none !important;
+}
+
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}

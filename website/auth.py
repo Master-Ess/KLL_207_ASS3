@@ -19,7 +19,7 @@ def login():
             if check_password_hash(user.password, password):
                 print('Logged in successfully!')
                 login_user(user, remember=True)
-                return render_template('index.html', response='User logged in')
+                return redirect(url_for('views.index'))
             else:
                return render_template("login.html", response = 'Incorrect password, try again.')
         else:

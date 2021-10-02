@@ -1,21 +1,35 @@
+from operator import countOf
 from os import stat
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
-from .models import Event
+from .models import Event, User
 from . import db
 
 
 views = Blueprint('views', __name__)
 
+id = 0
+fname ="Login or Register"
+sname =""
+payload="login"
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    
+    if current_user.is_authenticated:
+        id = current_user.id
+        alldata = User.query.filter_by(id=id).first()
+        fname = alldata.first_name
+        sname = alldata.last_name
+        payload = "edit_account/" + str(id)
+
+    return render_template("index.html", first=fname, second=sname, payload=payload)
+
 
 
 @views.route("/book_tickets")
 def book_ticket():
-    return render_template('book_tickets.html')
+    return render_template('book_tickets.html' , first=fname, second=sname, payload=payload)
 
 @views.route("/make_event", methods=['GET', 'POST'])
 @login_required
@@ -38,38 +52,64 @@ def make_event():
 
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
             print("missing errors")
-            return render_template("new_create_event.html", data = "Please fill in all boxes")
+            return render_template("create_event.html", data = "Please fill in all boxes" , first=fname, second=sname, payload=payload)
 
         else:
             new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
             db.session.add(new_event)
             db.session.commit()
             print('Event created or Updated!')
-        return render_template('index.html', response='Event created or Updated')
+        return render_template('index.html', response='Event created or Updated' , first=fname, second=sname, payload=payload)
     
-    return render_template("new_create_event.html")
+    return render_template("create_event.html", first=fname, second=sname, payload=payload)
 
-@views.route("/view_event")
-def view_event():
+@views.route("/view_event/<id>")
+def view_event(id):
+    
+    alldata = Event.query.filter_by(id=id).first()
 
-    id = 1 #will need to dynamicly set later
+    if alldata == None:
+        return render_template("404.html")
 
-    alldat = Event.query.filter_by(id=id).first()
-    name = alldat.title
-    location = alldat.location
-    date = alldat.date
-    tickets = alldat.tickets
-    data = alldat.data
-    img = alldat.img
+    name = alldata.title
+    location = alldata.location
+    date = alldata.date
+    tickets = alldata.tickets
+    data = alldata.data
+    img = alldata.img
 
     
 
-    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img)
+    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img , first=fname, second=sname, payload=payload)
 
 @views.route("/view_previous_purchases")
 @login_required
 def view_previous_purchases():
-    return render_template("view_previous_purchases.html")
+    return render_template("view_previous_purchases.html", first=fname, second=sname, payload=payload)
+
+
+
+@views.route("/edit_account/<id>", methods=['GET', 'POST'])
+@login_required
+def edit_account(id):
+    print(current_user.id)
+    if str(current_user.id) != str(id):
+        return render_template("403.html")
+
+    alldata = User.query.filter_by(id=id).first()
+
+    if alldata == None:
+        return render_template("404.html")
+
+    title = alldata.title
+    fname = alldata.first_name
+    lname = alldata.last_name
+    dateofbirth = alldata.dateofbirth
+    country = alldata.country
+    email = alldata.email
+
+    return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email )
+
 
 
 

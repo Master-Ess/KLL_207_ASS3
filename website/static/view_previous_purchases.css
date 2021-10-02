@@ -249,3 +249,8 @@ li a:hover {
   html .non-active{
     color: white;
   }
+
+  .usertab{
+    color: white;
+    position: absolute;right:0;
+  }

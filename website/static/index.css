@@ -425,5 +425,23 @@ next button */
   color: rgb(255, 6, 0);
 }
 
+a:link{
+  color:white
+}
+
+a:visited{
+  color:white
+}
+
+a:hover{
+  color:red;
+  text-decoration: none;  
+}
+
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}
+
 
 

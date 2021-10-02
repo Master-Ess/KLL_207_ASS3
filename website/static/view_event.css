@@ -252,6 +252,11 @@ html #comment_user{
     
   }
 
+  .usertab{
+    color: white;
+    position: absolute;right:0;
+  }
+
   
 }
 

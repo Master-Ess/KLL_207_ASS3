@@ -56,7 +56,7 @@
       
       <hr class="topthird">
       
-      <form name = "createeventform" action="#" method = "POST">
+      <form name = "CEF" action="#" method = "POST">
           <label for="eventname">Event Name</label><br>
           <div class = entry> 
               <input type="text" id="eventname" name="eventname" placeholder="Event Name"> 
@@ -104,14 +104,14 @@
             <input type="text" id="cost" name="cost" placeholder="$" maxlength="3"> 
         </div>
         <br>
-        <input id="submit-form" class = "hidden" for="createeventform" type="submit" value="SUBMIT" >
-      </form>
+        <input id="submit-form" class = "hidden" for="CEF" type="submit" value="SUBMIT" >
+      
         <label for="desc">Event Description</label><br>
         
-        <div class = entry> 
-            <textarea id="desc" name = "desc" form ="createeventform" rows = 8 ></textarea> 
-        </div>
         
+            <textarea id="descript" name = "descript" class = "form-control"  rows = 8form ="CEF" ></textarea> 
+        
+      </form>
         
           <p>By clicking on submit, I agree that I have read and agree to the Terms and Conditions and Privacy Policy</p>
           <label class = "register" for="submit-form" tabindex="0">SUBMIT</label><BR>

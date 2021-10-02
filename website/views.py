@@ -29,20 +29,22 @@ def make_event():
         DOE = request.form.get('DOE')
         URL = request.form.get('URL')
         cost = request.form.get('cost')
-        desc = request.form.get('desc')
+        descript = request.form.get('descript')
         location = request.form.get('location')
         cur_user = str(current_user)
         
+        print(descript)
         
-        if ename == None or ntickets == None or status == "Select" or DOE == None or URL == None or cost == None or location == None:
-             return render_template("new_create_event.html", data = "Please fill in all boxes")
 
-        
-        
-        new_event = Event(title=ename, data=desc, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
-        db.session.add(new_event)
-        db.session.commit()
-        print('Event created or Updated!')
+        if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
+            print("missing errors")
+            return render_template("new_create_event.html", data = "Please fill in all boxes")
+
+        else:
+            new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
+            db.session.add(new_event)
+            db.session.commit()
+            print('Event created or Updated!')
         return render_template('index.html', response='Event created or Updated')
     
     return render_template("new_create_event.html")

@@ -91,7 +91,7 @@ def book_ticket():
         cost = costper * ntickets
         eventmaxtickets = eventdata.tickets
         status = eventdata.status
-        
+
         if ntickets > eventmaxtickets:
             return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount")
         else:
@@ -105,8 +105,6 @@ def book_ticket():
             remaining_tickets = ( int(E) - int(ntickets))
             remaining_tickets_s = str(remaining_tickets)
             eventdata.tickets = remaining_tickets_s
-            #if remaining_tickets_s == "0":
-                #eventdata.status = "Upcomming"
             db.session.commit()
             print('Purchase successful')
             return redirect(url_for('views.index'))

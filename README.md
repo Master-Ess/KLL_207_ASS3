@@ -12,16 +12,11 @@ None - Im fucking awesome
 -----
 Web functionality missing:
 
-Buying Tickets
-
-Editing Events
-
 Commenting
 
 -----
 Potentials:
 
-Previously purchased tickets
 
 Search functionality
 

@@ -52,18 +52,18 @@
             <label for="Username">Event Name</label><br>
             <div class = entry>
               
-                <select id="title" name="usertitle">
+                <select id="event" name="event">
                 <option value="select">Select</option>
                   
-                {% for ship in ships %}
-                <option value="select">{{ship.name}} - {{ship.crew}} - {{ship.weight}}</option>
+                {% for event in passevent %}
+                <option value={{event.EID}}>{{event.title}} - {{event.location}} - ${{event.cost}}</option>
                 {% endfor %}
 
                 </select>
             </div><br>
-            <label for="password">Number of Tickets</label><br>
+            <label for="ticketno">Number of Tickets</label><br>
             <div class = entry> 
-                <input type="text" id="password" name="password" style="-webkit-text-security: disc" placeholder="Enter your password"> 
+                <input type="text" id="ticketno" name="ticketno" placeholder="Number of tickets"> 
             </div><br>
             <input class = "signin" type="submit"  value="PURCHASE">
           </form>       

@@ -2,26 +2,23 @@ from operator import countOf
 from os import stat
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
-from .models import Event, User
+from sqlalchemy import event
+from .models import Event, User, Comment, Purchase
 from . import db
 
 
 views = Blueprint('views', __name__)
 
-class SpaceShip:
-    def __init__(self, name, crew, weight):
-        self.name = name
-        self.crew = crew
-        self.weight = weight
+class IDV_Event:
+    def __init__(self, EID, title, location, cost):
+        self.EID = EID
+        self.title = title
+        self.location = location
+        self.cost = cost
 
-spaceships=[
-    SpaceShip('Eagle', 100, 700),
-    SpaceShip('Round', 1002, 670),
-    SpaceShip('Black Bird', 550, 1000),
-    SpaceShip('Seagul', 13, 23400),
-    SpaceShip('Pingvin', 200, 12300),
-    SpaceShip('Austridge', 500, 11200)
-]
+Levent=[]
+    
+
 
 
 
@@ -44,7 +41,41 @@ def index():
 
 @views.route("/book_tickets")
 def book_ticket():
-    return render_template('book_tickets.html', ships=spaceships)
+    if request.method == 'POST':
+
+        targetevent= request.form.get('event')
+        ntickets = int(request.form.get('ticketno'))       
+        cur_user = str(current_user)
+        eventdata = Event.query.filter_by(id=targetevent).first()
+        status = eventdata.status
+        costper = eventdata.cost
+        cost = costper * ntickets
+        eventmaxtickets = eventdata.tickets
+
+        if ntickets > eventmaxtickets:
+            return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount")
+        else:
+            if targetevent == "select" or ntickets == None or ntickets < 1:            
+                return render_template("book_tickets.html", response = "Please fill in all boxes")
+
+	    if status != "Upcomming - TP":
+                new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
+                db.session.add(new_purchase)
+                db.session.commit()
+                print('Purchase successful')
+    else:
+        datamaxid = Event.query.count()
+
+        i = 1
+        Levent=[]
+
+        while i <= datamaxid:
+            eventdata = Event.query.filter_by(id=i).first()
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost)        
+            Levent.append(payload)
+            i = i + 1
+    
+        return render_template('book_tickets.html', passevent=Levent)
 
 @views.route("/make_event", methods=['GET', 'POST'])
 @login_required

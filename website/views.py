@@ -1,6 +1,7 @@
 from operator import countOf
 from os import stat
 from flask import Blueprint, render_template, request
+from flask.wrappers import Response
 from flask_login import login_required, current_user
 from sqlalchemy import event
 from .models import Event, User, Comment, Purchase
@@ -17,6 +18,18 @@ class IDV_Event:
         self.cost = cost
 
 Levent=[]
+
+class id_purchase:
+    def __init__(self, EID, Etitle, Elocation, tickets, cost, date, img):
+        self.EID = EID
+        self.Etitle = Etitle
+        self.Elocation = Elocation
+        self.tickets = tickets
+        self.cost = cost
+        self.date = date
+        self.img = img
+
+user_purchases=[]
     
 
 
@@ -28,27 +41,30 @@ def index():
     fname ="Login or Register"
     sname =""
     payload="login"
+    id = "X"
     if current_user.is_authenticated:
         id = current_user.id
         alldata = User.query.filter_by(id=id).first()
         fname = alldata.first_name
         sname = alldata.last_name
         payload = "edit_account/" + str(id)
+        id = str(id)
+
 
     return render_template("index.html", first=fname, second=sname, payload=payload)
 
 
 
-@views.route("/book_tickets")
+@views.route("/book_tickets", methods=['GET', 'POST'])
 def book_ticket():
     if request.method == 'POST':
 
         targetevent= request.form.get('event')
         ntickets = int(request.form.get('ticketno'))       
-        cur_user = str(current_user)
+        cur_user = str(current_user.id)
         eventdata = Event.query.filter_by(id=targetevent).first()
         status = eventdata.status
-        costper = eventdata.cost
+        costper = eventdata.ticketcost
         cost = costper * ntickets
         eventmaxtickets = eventdata.tickets
 
@@ -58,14 +74,16 @@ def book_ticket():
             if targetevent == "select" or ntickets == None or ntickets < 1:            
                 return render_template("book_tickets.html", response = "Please fill in all boxes")
 
-	    if status != "Upcomming - TP":
-                new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
-                db.session.add(new_purchase)
-                db.session.commit()
-                print('Purchase successful')
+        if status == "Upcomming - TP":
+            new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
+            db.session.add(new_purchase)
+            db.session.commit()
+            print('Purchase successful')
+            return render_template("index.html", data="Tickets Purchased")
+        
+        return render_template("500.html")
     else:
         datamaxid = Event.query.count()
-
         i = 1
         Levent=[]
 
@@ -130,8 +148,39 @@ def view_event(id):
 
 @views.route("/view_previous_purchases")
 @login_required
-def view_previous_purchases():
-    return render_template("view_previous_purchases.html")
+def view_previous_purchases():   
+    id = 'x'
+    id = current_user.id
+    if str(current_user.id) != str(id):
+        return render_template("403.html")
+
+    email = current_user.email
+    
+
+    datamaxid = Purchase.query.filter(Purchase.user_id == id).count()
+    print(datamaxid)
+    if datamaxid == 0:
+        return render_template("view_previous_purchases.html", email = email, response="User has not purchased any tickets")
+    
+    
+    i = 1
+    user_purchases=[]
+
+    while i <= datamaxid:
+        
+        purchasedata = Purchase.query.filter_by(id=i).first()
+        eventdata = Event.query.filter_by(id = purchasedata.event_id).first()
+        
+        if int(purchasedata.user_id) == int(id):
+            
+            payload = id_purchase(purchasedata.event_id, eventdata.title, eventdata.location, purchasedata.notickets, purchasedata.cost, purchasedata.purchasedate, eventdata.img)        
+            user_purchases.append(payload)
+            
+        i = i + 1
+    
+        #return render_template('book_tickets.html', passevent=Levent)
+
+    return render_template("view_previous_purchases.html", email = email, passpurchase=user_purchases)
 
 
 

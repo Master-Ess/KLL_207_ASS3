@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-<title>Formula 1: The World Championship</title>
-<head>
-    <!-- <link rel="stylesheet" href='css/view_previous_purchases.css'> -->
+<title>Formula 1: The world Championship</title>
+<head >
+    <link rel="stylesheet" href='static\view_previous_purchases.css'>
 
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='view_previous_purchases.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='view_previous_purchases.css') }}"> 
 
-    
-    <link rel="icon" href="https://w7.pngwing.com/pngs/512/612/png-transparent-mercedes-amg-petronas-f1-team-2018-fia-formula-one-world-championship-abu-dhabi-grand-prix-logo-red-bull-racing-f1-logo-angle-text-rectangle.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
+       
+        
         </style>
 </head>
 
@@ -22,68 +22,50 @@
 <img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class="center">
 
 <nav>
-  <li><a class = "non-active" href = "\">Home</a></li>
-  <li><a class = "non-active" href="make_event">Create or edit an event</a></li>
-  <li><a class = "non-active" href="book_tickets">Purchase tickets</a></li>
-  <li> <a id = current_tab> View previously purchased tickets</a></li>
-
-        
+    <li id=home_tab><a href=\> Home </a></li>
+    <li><a href =""> Login/Register </a></li>
+    <li><a href=\make_event> Create or edit an event </a></li>
+    <li><a href=\book_tickets> Purchase tickets </a></li>
+    <li><a href=\view_previous_purchases>View previously purchased tickets</a></li>
+       
 </nav>
 </top>
 
 
-
-<!-- header -->
-<div class = "main_content">
-
-  <div class = "top_text">
-<h1>Previous Ticket Purchases</h1>
-<h2>Account name: kenziehaigh@gmail.com</h2>  
-</div>
-
-
-<div class = "ticket_purchase"><a href = "events/view_event.html">
-  <img class="item_image" src="https://d2xpg1khvwxlf1.cloudfront.net/production/images/original/31766-Red_Bull_Paddock_Club_Driver_Appearances-9d7834ba65e8371ae6b1f44b40b82993.jpg" 
-    alt="maxibon">
-  </a>
-  <h2> Driver meet - Monza</h2>
-  <p> 3 Tickets - £600</p>
-  <p> Booked on 8/9/2021</p>
-
-</div>
-
-<div class = "ticket_purchase"><a href = "events/streets_of_monza_event.html">
-  <img class ="item_image" src="https://www.thepaddockmagazine.com/wp-content/uploads/2021/09/si202109050675_hires_jpeg_24bit_rgb-1050x700.jpg" 
-    alt="palmero">
-  </a>
-  <h2> Monza Street race event</h2>
-  <p> 5 Tickets - £500</p>
-  <p> Booked on 8/9/2021</p>
-
-</div>
-
-<div class = "ticket_purchase"><a href = "events/subsonica_preformance.html">
-  <img class ="item_image" src="https://i.pinimg.com/474x/19/80/c5/1980c5e083da2cdbda924db62155fc55.jpg" 
-    alt="subsonica">
-  </a>
-  <h2> Subsonica pre race concert</h2>
-  <p> 3 Tickets - £1200</p>
-  <p> Booked on 9/9/2021</p>
-
-</div>
-
-<div class = "bottom_text">
-<h2>Total number of purchases: 3</h2>
-</div>
-
-
-
-</div>
-
-
-
-<!-- footer all classes have f**** to indicate footer class-->
 <body>
+<!-- header -->
+
+<div class="mrow"> 
+    <div class="mcolumn">    
+        <!--  empty     -->
+    </div>
+    <div class="mcolumn">  
+        <h1><b>PREVIOUSLY BOOKED TICKETS</b></h1>
+
+        <h2>USER: {{email}}</h2>
+
+        <hr class="topthird">
+        
+
+          <p id ="response" >{{response}}</p>
+
+          {% for purchase in passpurchase %}
+          <a href="\view_event/{{purchase.EID}}"><img src={{purchase.img}} style="height:60pt; float:right"></a>
+          <p><b>{{purchase.Etitle}}</b> - {{purchase.Elocation}} - {{purchase.tickets}} Tickets - ${{purchase.cost}} </p>
+          <p>Purchased on: {{purchase.date}}</p>
+          <hr class="topthird">
+          {% endfor %}
+          
+          <p id = response> All times are in GMT 0 </p>
+            
+          
+
+    </div>
+
+</div>
+ 
+<!-- footer all classes have f**** to indicate footer class-->
+
 <div class="frow">
     <div class="fcolumn">
       <div class="fcard">

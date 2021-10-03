@@ -39,6 +39,8 @@ class Comment(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     data = db.Column(db.String(10000), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
+    
+
 
 class Purchase(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,4 +48,4 @@ class Purchase(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     notickets = db.Column(db.Integer, nullable=False)
     cost = db.Column(db.Integer, nullable=False)
-    purchasedate = db.Column(db.DateTime(timezone=True), default=func.now())
+    purchasedate = db.Column(db.DateTime(timezone=False), default=func.now())

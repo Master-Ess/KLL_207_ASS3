@@ -3,7 +3,7 @@ from os import stat
 from flask import Blueprint, render_template, request
 from flask.wrappers import Response
 from flask_login import login_required, current_user
-from sqlalchemy import event
+from sqlalchemy import event, update
 from .models import Event, User, Comment, Purchase
 from . import db
 
@@ -77,11 +77,19 @@ def book_ticket():
         if status == "Upcomming - TP":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
             db.session.add(new_purchase)
+            E = eventdata.tickets
+            remaining_tickets = ( int(E) - int(ntickets))
+            remaining_tickets_s = str(remaining_tickets)
+            print(eventdata.tickets)
+            eventdata.tickets = remaining_tickets_s
+            print(eventdata.tickets)
             db.session.commit()
             print('Purchase successful')
-            return render_template("index.html", data="Tickets Purchased")
+            return render_template("index.html", response="Tickets Purchased")
+        else:
+            return render_template("book_tickets.html", response = "Can't purchase tickets for event at the current time")
+
         
-        return render_template("500.html")
     else:
         datamaxid = Event.query.count()
         i = 1
@@ -109,10 +117,7 @@ def make_event():
         cost = request.form.get('cost')
         descript = request.form.get('descript')
         location = request.form.get('location')
-        cur_user = str(current_user)
-        
-        print(descript)
-        
+        cur_user = str(current_user.id)      
 
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
             print("missing errors")

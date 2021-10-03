@@ -59,16 +59,17 @@
       <form name = "CEF" action="#" method = "POST">
           <label for="eventname">Event Name</label><br>
           <div class = entry> 
-              <input type="text" id="eventname" name="eventname" placeholder="Event Name"> 
+              <input type="text" id="eventname" name="eventname" placeholder="Event Name" Value = "{{name}}"> 
           </div><br>
           <label for="ntickets">Number of Tickets</label><br>
           <div class = entry> 
-              <input type="text" id="ntickets" name="ntickets" placeholder="Number of Tickets"> 
+              <input type="text" id="ntickets" name="ntickets" placeholder="Number of Tickets" Value = {{tickets}}> 
           </div><br>
 
         <label for="status">Status</label><br>
         <div class = short-entry> 
-        <select id="status" name="status">
+        <select id="status" name="status" Value = {{status}}>
+          <option value={{status}}>{{status}}</option>
           <option value="select">Select</option>
           <option value="Upcomming">Upcomming</option>
           <option value="Upcomming - TP">Upcomming - Tickets Purchaseable</option>
@@ -78,12 +79,12 @@
         <br>
         <label for="DOE">Date of event</label><br>
         <div class = "short-entry"> 
-            <input type="text" id="DOE" name="DOE" placeholder="(DD/MM/YYYY)" size=10 maxlength=10  onkeyup="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')">
+            <input type="text" id="DOE" name="DOE" placeholder="(DD/MM/YYYY)" Value = {{DOE}} size=10 maxlength=10  onkeyup="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')">
         </div>
         <br>
         <label for="location">Event Location</label><br>
           <div class = entry> 
-              <input type="text" id="location" name="location" placeholder="Location"> 
+              <input type="text" id="location" name="location" placeholder="Location" Value = "{{location}}""> 
           </div><br>
       </div> 
 
@@ -96,12 +97,12 @@
 
         <label for="URL">Event Image URL</label><br>
         <div class = entry> 
-          <input type="text" id="URL" name="URL" placeholder="URL"> 
+          <input type="text" id="URL" name="URL" placeholder="URL" Value = {{URL}}> 
         </div>
         <br>
         <label for="cost">Cost per ticket ($)</label><br>
         <div class = entry> 
-            <input type="text" id="cost" name="cost" placeholder="$" maxlength="3"> 
+            <input type="text" id="cost" name="cost" placeholder="$" maxlength="3" Value = {{cost}}> 
         </div>
         <br>
         <input id="submit-form" class = "hidden" for="CEF" type="submit" value="SUBMIT" >
@@ -109,7 +110,7 @@
         <label for="desc">Event Description</label><br>
         
         
-            <textarea id="descript" name = "descript" class = "form-control"  rows = 8form ="CEF" ></textarea> 
+            <textarea id="descript" name = "descript" class = "form-control"  rows = 8form ="CEF" >{{desc}}</textarea> 
         
       </form>
         

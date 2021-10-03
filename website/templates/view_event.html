@@ -21,7 +21,7 @@
 
 <nav>
   <li id=home_tab><a href = "\">Home</a></li>
-  <li><a class = "non-active" href="\make_event">Create or edit an event</a></li>
+  <li><a class = "non-active" href="\make_event">Create an event</a></li>
   <li><a class = "non-active" href="\book_tickets">Purchase tickets</a></li>
   <li><a class = "non-active" href="\view_previous_purchases">View previously purchased tickets</a></li>
 
@@ -54,11 +54,15 @@
 
 
   <div class="column">
-    
+    <a href="\make_event/{{id}}">
+    <button id="edit_event" style = "float: right; color: red;">
+       {{edit}}
+    </button>
+  </a>
     <img class="side_image" src= {{event_image}} 
         alt="Maxibon"><br>
  
-      <h2 id = "TR_txt"> Tickets Remaining: {{event_tickets}} &nbsp; &nbsp; &nbsp; Status: Upcomming</h2> 
+      <h2 id = "TR_txt"> Tickets Remaining: {{event_tickets}} &nbsp; &nbsp; &nbsp; Status: {{status}}</h2> 
 
       <a href = "book_tickets.html"> <input id = "TP_button" type="submit" value="Purchase now"></a><br>
 
@@ -66,7 +70,7 @@
       <textarea rows="4" cols="60"></textarea><br>
       <button id="submit_comment"> Submit comment</button>
     
-     
+      
   </div>
   
   

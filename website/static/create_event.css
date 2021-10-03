@@ -357,7 +357,8 @@ hr.topthird {
   border-radius: 5pt;
   text-size-adjust: larger;
   margin-bottom: 15pt;
-  margin-left: 82%;
+  /* margin-left: 82%; */
+  float: right;
 }
 
 .short-entry{
@@ -388,4 +389,8 @@ textarea{
 .usertab{
   color: white;
   position: absolute;right:0;
+}
+
+#invis{
+  display:none;
 }

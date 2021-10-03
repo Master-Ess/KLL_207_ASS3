@@ -37,108 +37,29 @@
 </top>
 
 
-<body>
 
-
-  <input type="radio" id="driver-button" name="radio">
-  <label for="driver-button">
-    
-   <div class="cx-driver-button">
-      Driver Meets &nbsp; &nbsp; &nbsp;
-   
-  </div>
-  </label>
-
-<input type="radio" id="activate-div" name="radio">
-  <label for="activate-div">
-   
-   <div class="my-div">
-      Street Races &nbsp; &nbsp; &nbsp;
-   </div>
-
-  </label>
-
-  <input type="radio" id="music-button" name="radio">
-  <label for="music-button">
-  
-   <div class="cx-music-button">
-      Music &nbsp; &nbsp; &nbsp;
-   </div>
-
-  </label>
-
-  <input type="radio" id="reset-button" name="radio">
-  <label for="reset-button">
-  
-   <div class="cx-reset-button">
-      Reset
-   </div>
-
-  </label>
-</body>
 
 <p id ="response" >{{response}}</p>
 
+{% for event in passevent %}
 <div id="testing_lable" >
+
+
   <div class = "container  p-3 my-3 border">
 
-    <a href = "view_event/1"> <img id="headline_image" src="https://d2xpg1khvwxlf1.cloudfront.net/production/images/original/31766-Red_Bull_Paddock_Club_Driver_Appearances-9d7834ba65e8371ae6b1f44b40b82993.jpg" 
-      alt="Max Verstappen" class="right"></a>
+    <a href = "view_event/{{event.EID}}"> <img id="headline_image" src="{{event.img}}" 
+      alt="Max Verstappen" class={{event.side}}></a>
 
   
-    <h2> <b>Meet the drivers - Monza</b> </h2>
+    <h2> <b>{{event.title}} - {{event.location}}</b> </h2>
 
-    <p id="headline_text">After taking his first Grand Prix victory since 2018 Daniel Ricciardo insisted he never lost faith 
-      in his own ability to deliver, despite a difficult start to his time with McLaren, having joined the team for this season. 
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <p id="headline_text">{{event.desc}}
     </p>
   </div>
 </div>
-   
-
-<div id = "secondary_article">
-  <a href = "view_event/2">
-  <div class = "container  p-3 my-3 border">
-        <img id = "secondary_image" src="https://www.thepaddockmagazine.com/wp-content/uploads/2021/09/si202109050675_hires_jpeg_24bit_rgb-1050x700.jpg" 
-    alt="Lewis Hamilton protected from Max's Wheel at Monza" class = left>
-  </a>
-    <h2> <b> Streets of Monza</b></h2>
-    <p id="secondary_text"> Hamilton says halo ‘saved my neck’ in Monza, and gives his take on Verstappen’s penalty
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-        sunt in culpa qui officia deserunt mollit anim id est laborum
-    </p>
+{% endfor %}
 
 
-  </div>
-  
-</div>       
-
-<div id='info_section'>
-  
-      <p>{{ data }}</p>
-  
-</div>
-
-<div id = "tertiary_artice">
-  <div class = "container  p-3 my-3 border">
-      <a href = "view_event/3"> <img id = "tertiary_image" src="https://i.pinimg.com/474x/19/80/c5/1980c5e083da2cdbda924db62155fc55.jpg" 
-      alt="Subsonica" class = right ></a>
-
-  <h2> <b> Subsonica Preformance - Monza Trackside</b></h2>
-  <p id = "tertiary_text">McLaren’s leadership duo of Team Principal Andreas Seidl and CEO Zak Brown were understandably thrilled after Daniel Ricciardo 
-      ended a 170-race drought for the team with victory at Monza
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-      in reprehenderit in voluptate velit esse cillum 
-  </p>
-
-  </div>
-</div>        
  
 <!-- footer -->
 

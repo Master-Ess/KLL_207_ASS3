@@ -66,6 +66,8 @@ li a:hover {
 }
 
 #headline_text{
+  min-height: 190pt;
+  max-height: 250pt;
   padding-bottom: 25px;
 }
 

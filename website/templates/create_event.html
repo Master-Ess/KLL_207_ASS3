@@ -70,7 +70,6 @@
         <div class = short-entry> 
         <select id="status" name="status" Value = {{status}}>
           <option value={{status}}>{{status}}</option>
-          <option value="select">Select</option>
           <option value="Upcomming">Upcomming</option>
           <option value="Upcomming - TP">Upcomming - Tickets Purchaseable</option>
           <option value="Cancelled">Cancelled</option>
@@ -79,7 +78,7 @@
         <br>
         <label for="DOE">Date of event</label><br>
         <div class = "short-entry"> 
-            <input type="text" id="DOE" name="DOE" placeholder="(DD/MM/YYYY)" Value = {{DOE}} size=10 maxlength=10  onkeyup="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')">
+            <input type="text" id="DOE" name="DOE" placeholder="(DD/MM/YYYY)" Value = "{{DOE}}" size=10 maxlength=10  onkeyup="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')">
         </div>
         <br>
         <label for="location">Event Location</label><br>
@@ -115,6 +114,7 @@
       </form>
         
           <p>By clicking on submit, I agree that I have read and agree to the Terms and Conditions and Privacy Policy</p>
+          <a href="delete/{{id}}"><label class = "register" style= "float:left !important; margin-left: 0% !important; " id =  {{delete}}  tabindex="0">DELETE</label></a>
           <label class = "register" for="submit-form" tabindex="0">SUBMIT</label><BR>
        
       </div>       

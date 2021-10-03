@@ -6,17 +6,21 @@ from flask_login import login_required, current_user
 from sqlalchemy import event, update
 from werkzeug.utils import redirect
 from .models import Event, User, Comment, Purchase
+from random import *
 from . import db
 
 
 views = Blueprint('views', __name__)
 
 class IDV_Event:
-    def __init__(self, EID, title, location, cost):
+    def __init__(self, EID, title, location, cost, desc, img, side):
         self.EID = EID
         self.title = title
         self.location = location
         self.cost = cost
+        self.desc = desc
+        self.img = img
+        self.side = side
 
 Levent=[]
 
@@ -32,12 +36,16 @@ class id_purchase:
 
 user_purchases=[]
 
+
 @views.route('/', methods=['GET', 'POST'])
 def index():
+
+    print(str(randint(1,5)))
+
     id = 0
     fname ="Login or Register"
     sname =""
-    payload="login"
+    tpayload="login"
     id = "X"
     if current_user.is_authenticated:
         id = current_user.id
@@ -46,9 +54,25 @@ def index():
         sname = alldata.last_name
         payload = "edit_account/" + str(id)
         id = str(id)
+    
+    datamaxid = Event.query.count()
+    Levent=[]
+    i = 1
+    
+    while i <= datamaxid:
+        eventdata = Event.query.filter_by(id=i).first()
+        side = "right"
+        if (i % 2) == 0:
+            side = "left"
+        payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
+        Levent.append(payload)
+        i = i + 1
+        
+        
 
 
-    return render_template("index.html", first=fname, second=sname, payload=payload)
+
+    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent)
 
 
 
@@ -62,11 +86,12 @@ def book_ticket():
         ntickets = int(request.form.get('ticketno'))       
         cur_user = str(current_user.id)
         eventdata = Event.query.filter_by(id=targetevent).first()
-        status = eventdata.status
+        
         costper = eventdata.ticketcost
         cost = costper * ntickets
         eventmaxtickets = eventdata.tickets
-
+        status = eventdata.status
+        
         if ntickets > eventmaxtickets:
             return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount")
         else:
@@ -80,9 +105,11 @@ def book_ticket():
             remaining_tickets = ( int(E) - int(ntickets))
             remaining_tickets_s = str(remaining_tickets)
             eventdata.tickets = remaining_tickets_s
+            #if remaining_tickets_s == "0":
+                #eventdata.status = "Upcomming"
             db.session.commit()
             print('Purchase successful')
-            return render_template("index.html", response="Tickets Purchased")
+            return redirect(url_for('views.index'))
         else:
             return render_template("book_tickets.html", response = "Can't purchase tickets for event at the current time")
 
@@ -94,7 +121,7 @@ def book_ticket():
 
         while i <= datamaxid:
             eventdata = Event.query.filter_by(id=i).first()
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost)        
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
             Levent.append(payload)
             i = i + 1
     
@@ -125,9 +152,9 @@ def make_event():
             db.session.add(new_event)
             db.session.commit()
             print('Event created or Updated!')
-        return render_template('index.html', response='Event created or Updated')
+        return redirect(url_for('views.index'))
     
-    return render_template("create_event.html")
+    return render_template("create_event.html" , delete="invis", status="Select")
 
 @views.route("/view_event/<id>")
 def view_event(id):
@@ -231,7 +258,7 @@ def edit_account(id):
             alldata.email = value
             db.session.commit()   
 
-        return render_template('index.html')
+        return redirect(url_for('views.index'))
 
     else:
 
@@ -316,8 +343,7 @@ def edit_event(id):
 
 
         name = str(alldata.title)
-        print("marker")
-        print(name)
+        id = alldata.id
         tickets = alldata.tickets
         status = alldata.status
         DOE = alldata.date
@@ -326,4 +352,23 @@ def edit_event(id):
         cost = alldata.ticketcost
         desc = alldata.data
 
-        return render_template("create_event.html", name=name, tickets=tickets, status=status, DOE=DOE, location=location, URL=URL, cost=cost, desc=desc)
+        return render_template("create_event.html", name=name, tickets=tickets, status=status, DOE=DOE, location=location, URL=URL, cost=cost, desc=desc, id = id)
+
+@views.route("/make_event/delete/<id>", methods=['GET', 'POST'])
+@login_required
+def delete_event(id):
+
+    alldata = Event.query.filter_by(id=id).first()
+
+
+    if alldata == None:
+        return render_template("404.html")
+
+    if str(current_user.id) != str(alldata.user_id):
+        return render_template("403.html")
+
+    Event.query.filter_by(id=id).delete()
+    print('EVENT DELETED')
+    db.session.commit()
+
+    return redirect(url_for('views.index'))

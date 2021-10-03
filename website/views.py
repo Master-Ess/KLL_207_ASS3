@@ -80,9 +80,7 @@ def book_ticket():
             E = eventdata.tickets
             remaining_tickets = ( int(E) - int(ntickets))
             remaining_tickets_s = str(remaining_tickets)
-            print(eventdata.tickets)
             eventdata.tickets = remaining_tickets_s
-            print(eventdata.tickets)
             db.session.commit()
             print('Purchase successful')
             return render_template("index.html", response="Tickets Purchased")
@@ -192,23 +190,63 @@ def view_previous_purchases():
 @views.route("/edit_account/<id>", methods=['GET', 'POST'])
 @login_required
 def edit_account(id):
-    print(current_user.id)
-    if str(current_user.id) != str(id):
-        return render_template("403.html")
 
-    alldata = User.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        alldata = User.query.filter_by(id=id).first()
 
-    if alldata == None:
-        return render_template("404.html")
 
-    title = alldata.title
-    fname = alldata.first_name
-    lname = alldata.last_name
-    dateofbirth = alldata.dateofbirth
-    country = alldata.country
-    email = alldata.email
+        value = request.form.get('title')
+        if value != None:
+            alldata.title = value
+            db.session.commit() 
 
-    return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email )
+        value = request.form.get('fname')
+        if value != None:
+            alldata.first_name = value
+            db.session.commit()  
+
+        value = request.form.get('lname')
+        if value != None:
+            alldata.last_name = value
+            db.session.commit()          
+
+        value = request.form.get('DOB')
+        if value != None:
+            alldata.dateofbirth = value
+            db.session.commit() 
+
+        value = request.form.get('Country')
+        if value != None:
+            alldata.country = value
+            db.session.commit()  
+
+        value = request.form.get('email')
+        if value != None:
+            alldata.email = value
+            db.session.commit()   
+
+
+        return render_template('index.html')
+
+    else:
+
+        print(current_user.id)
+        if str(current_user.id) != str(id):
+            return render_template("403.html")
+
+        alldata = User.query.filter_by(id=id).first()
+
+        if alldata == None:
+            return render_template("404.html")
+
+        title = alldata.title
+        fname = alldata.first_name
+        lname = alldata.last_name
+        dateofbirth = alldata.dateofbirth
+        country = alldata.country
+        email = alldata.email
+
+        return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email )
 
 
 

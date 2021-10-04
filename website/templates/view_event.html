@@ -24,7 +24,8 @@
   <li><a class = "non-active" href="\make_event">Create an event</a></li>
   <li><a class = "non-active" href="\book_tickets">Purchase tickets</a></li>
   <li><a class = "non-active" href="\view_previous_purchases">View previously purchased tickets</a></li>
-
+  <li class = "usertab"><a href="{{pers[2]}}">{{pers[0]}} {{pers[1]}}</a></li>
+  
         
 </nav>
 </top>
@@ -49,7 +50,7 @@
     {% for comment in passcomment %}
     <div class = "{{comment.Cside}}">
     <div class = "comment">
-      
+
       <p><a class="delcomment" href = "{{comment.Cdeletelink}}"> {{comment.Cdelete}} </a></p>
       <p id = "comment_user"> {{comment.Cname}}:</p>
       

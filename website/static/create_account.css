@@ -363,6 +363,11 @@ hr.topthird {
 width: 45%;
 }
 
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}
+
 #error_message{
   color:rgb(255, 6, 0);
   text-align: center;

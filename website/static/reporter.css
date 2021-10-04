@@ -22,6 +22,11 @@ html top{
   width: 100%;
 }
 
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}
+
 html nav {
   font-family: "Titillium Web";
 

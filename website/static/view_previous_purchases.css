@@ -399,3 +399,8 @@ html .non-active{
   background-color: white !important;
   color: rgb(255, 6, 0) !important;
 }
+
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}

@@ -14,6 +14,12 @@ import re
 
 views = Blueprint('views', __name__)
 
+
+global usrinfo
+
+usrinfo = ['Login or Register','','\login']
+
+
 class IDV_Event:
     def __init__(self, EID, title, location, cost, desc, img, side):
         self.EID = EID
@@ -48,6 +54,24 @@ class eventdisp:
         self.Cdeletelink = Cdeletelink
 
 event_comment=[]
+
+def persistant_usr():
+    
+    
+    usrinfo = ['Login or Register','','\login']
+
+    if current_user.is_authenticated:
+        pfname = current_user.first_name
+        plname = current_user.last_name
+        purl = "\edit_account/" + str(current_user.id)
+
+    
+    usrinfo = [pfname, plname, purl]    
+    
+    return usrinfo
+
+
+    
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -116,7 +140,7 @@ def index():
 
 
 
-    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent)
+    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent )
 
 
 
@@ -137,10 +161,10 @@ def book_ticket():
         status = eventdata.status
 
         if ntickets > eventmaxtickets:
-            return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount")
+            return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount", pers=persistant_usr())
         else:
             if targetevent == "select" or ntickets == None or ntickets < 1:            
-                return render_template("book_tickets.html", response = "Please fill in all boxes")
+                return render_template("book_tickets.html", response = "Please fill in all boxes", pers=persistant_usr())
 
         if status == "Upcomming - TP":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
@@ -153,7 +177,7 @@ def book_ticket():
             print('Purchase successful')
             return redirect(url_for('views.index'))
         else:
-            return render_template("book_tickets.html", response = "Can't purchase tickets for event at the current time")
+            return render_template("book_tickets.html", response = "Can't purchase tickets for event at the current time", pers=persistant_usr())
 
         
     else:
@@ -167,7 +191,7 @@ def book_ticket():
             Levent.append(payload)
             i = i + 1
     
-        return render_template('book_tickets.html', passevent=Levent)
+        return render_template('book_tickets.html', passevent=Levent, pers=persistant_usr())
 
 @views.route("/make_event", methods=['GET', 'POST'])
 @login_required
@@ -187,7 +211,7 @@ def make_event():
 
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
             print("missing errors")
-            return render_template("create_event.html", data = "Please fill in all boxes")
+            return render_template("create_event.html", data = "Please fill in all boxes", pers=persistant_usr())
 
         else:
             new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
@@ -196,10 +220,13 @@ def make_event():
             print('Event created or Updated!')
         return redirect(url_for('views.index'))
     
-    return render_template("create_event.html" , delete="invis", status="Select")
+    return render_template("create_event.html" , delete="invis", status="Select", pers=persistant_usr())
 
 @views.route("/view_event/<id>", methods=['GET', 'POST'])
 def view_event(id):
+
+    
+
     if request.method == 'POST':
         if current_user.is_authenticated:
             cdata = request.form.get('descript')
@@ -222,7 +249,7 @@ def view_event(id):
             editdata = "edit_event"
 
     if alldata == None:
-        return render_template("404.html")
+        return render_template("404.html" , pers=persistant_usr())
 
     name = alldata.title
     name = name.upper()
@@ -266,7 +293,10 @@ def view_event(id):
             
         i = i + 1
 
-    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img, edit=editdata, status=status, id=id, passcomment=event_comment)
+    
+    
+
+    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img, edit=editdata, status=status, id=id, passcomment=event_comment, pers=persistant_usr())
 
 @views.route("/view_previous_purchases")
 @login_required
@@ -274,7 +304,7 @@ def view_previous_purchases():
     id = 'x'
     id = current_user.id
     if str(current_user.id) != str(id):
-        return render_template("403.html")
+        return render_template("403.html", pers=persistant_usr())
 
     email = current_user.email
     
@@ -282,7 +312,7 @@ def view_previous_purchases():
     datamaxid = Purchase.query.filter(Purchase.user_id == id).count()
     print(datamaxid)
     if datamaxid == 0:
-        return render_template("view_previous_purchases.html", email = email, response="User has not purchased any tickets")
+        return render_template("view_previous_purchases.html", email = email, response="User has not purchased any tickets" , pers=persistant_usr())
     
     
     i = 1
@@ -300,9 +330,8 @@ def view_previous_purchases():
             
         i = i + 1
     
-        #return render_template('book_tickets.html', passevent=Levent)
 
-    return render_template("view_previous_purchases.html", email = email, passpurchase=user_purchases)
+    return render_template("view_previous_purchases.html", email = email, passpurchase=user_purchases , pers=persistant_usr())
 
 
 
@@ -350,12 +379,12 @@ def edit_account(id):
 
         
         if str(current_user.id) != str(id):
-            return render_template("403.html")
+            return render_template("403.html", pers=persistant_usr())
 
         alldata = User.query.filter_by(id=id).first()
 
         if alldata == None:
-            return render_template("404.html")
+            return render_template("404.html", pers=persistant_usr())
 
         title = alldata.title
         fname = alldata.first_name
@@ -364,7 +393,7 @@ def edit_account(id):
         country = alldata.country
         email = alldata.email
 
-        return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email )
+        return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email , pers=persistant_usr())
 
 @views.route("/make_event/<id>", methods=['GET', 'POST'])
 @login_required
@@ -422,10 +451,10 @@ def edit_event(id):
 
 
         if alldata == None:
-            return render_template("404.html")
+            return render_template("404.html", pers=persistant_usr())
 
         if str(current_user.id) != str(alldata.user_id):
-            return render_template("403.html")
+            return render_template("403.html", pers=persistant_usr())
 
 
         name = str(alldata.title)
@@ -438,7 +467,7 @@ def edit_event(id):
         cost = alldata.ticketcost
         desc = alldata.data
 
-        return render_template("create_event.html", name=name, tickets=tickets, status=status, DOE=DOE, location=location, URL=URL, cost=cost, desc=desc, id = id)
+        return render_template("create_event.html", name=name, tickets=tickets, status=status, DOE=DOE, location=location, URL=URL, cost=cost, desc=desc, id = id, pers=persistant_usr())
 
 @views.route("/make_event/delete/<id>", methods=['GET', 'POST'])
 @login_required
@@ -448,10 +477,10 @@ def delete_event(id):
 
 
     if alldata == None:
-        return render_template("404.html")
+        return render_template("404.html", pers=persistant_usr())
 
     if str(current_user.id) != str(alldata.user_id):
-        return render_template("403.html")
+        return render_template("403.html", pers=persistant_usr())
 
     Event.query.filter_by(id=id).delete()
     print('EVENT DELETED')
@@ -467,10 +496,10 @@ def delete_comment(id,adr):
 
 
     if alldata == None:
-        return render_template("404.html")
+        return render_template("404.html", pers=persistant_usr())
 
     if str(current_user.id) != str(alldata.user_id):
-        return render_template("403.html")
+        return render_template("403.html", pers=persistant_usr())
 
     Comment.query.filter_by(id=id).delete()
     print('COMMENT DELETED')

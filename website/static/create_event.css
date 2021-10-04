@@ -391,6 +391,11 @@ textarea{
   position: absolute;right:0;
 }
 
+.usertab{
+  color: white;
+  position: absolute;right:0;
+}
+
 #invis{
   display:none;
 }

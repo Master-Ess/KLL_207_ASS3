@@ -70,6 +70,6 @@ def sign_up():
             db.session.commit()
             login_user(new_user, remember=True)
             print('Account created!')
-            return render_template('index.html', response='Account created and user logged in')
+            return redirect(url_for('views.index'))
 
     return render_template("create_account.html", user=current_user)

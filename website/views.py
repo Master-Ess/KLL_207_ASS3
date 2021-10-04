@@ -91,6 +91,7 @@ def index():
     sname =""
     tpayload="login"
     id = "X"
+
     if current_user.is_authenticated:
         id = current_user.id
         alldata = User.query.filter_by(id=id).first()
@@ -133,10 +134,6 @@ def index():
             Levent.append(payload)
             s = s + 1
             i = i + 1
-        
-        
-
-
 
     return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent )
 

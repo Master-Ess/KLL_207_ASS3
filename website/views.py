@@ -147,9 +147,10 @@ def index():
 @views.route("/book_tickets", methods=['GET', 'POST'])
 @login_required
 def book_ticket():
-    
+    response = ""
     if request.method == 'POST':
-
+        
+        
         targetevent= request.form.get('event')
         ntickets = int(request.form.get('ticketno'))       
         cur_user = str(current_user.id)
@@ -161,10 +162,10 @@ def book_ticket():
         status = eventdata.status
 
         if ntickets > eventmaxtickets:
-            return render_template("book_tickets.html", response="Please enter a number of tickets that is equal or less than the avalible ammount", pers=persistant_usr())
+            response="Please enter a number of tickets that is equal or less than the avalible ammount"
         else:
             if targetevent == "select" or ntickets == None or ntickets < 1:            
-                return render_template("book_tickets.html", response = "Please fill in all boxes", pers=persistant_usr())
+                response = "Please fill in all boxes"
 
         if status == "Upcomming - TP":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
@@ -177,29 +178,30 @@ def book_ticket():
             print('Purchase successful')
             return redirect(url_for('views.index'))
         else:
-            return render_template("book_tickets.html", response = "Can't purchase tickets for event at the current time", pers=persistant_usr())
+            response = "Can't purchase tickets for event at the current time"
+            
 
         
-    else:
-
-        get = Event.query.order_by(Event.id.desc()).first()
-        datamaxid = 0
-        if get != None:
-            datamaxid = get.id
-
-        i = 1
-        Levent=[]
-
-        while i <= datamaxid:
-            if datamaxid != None:
-
-                eventdata = Event.query.filter_by(id=i).first()
-                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
-                Levent.append(payload)
-                
-            i = i + 1
     
-        return render_template('book_tickets.html', passevent=Levent, pers=persistant_usr())
+
+    get = Event.query.order_by(Event.id.desc()).first()
+    datamaxid = 0
+    if get != None:
+        datamaxid = get.id
+
+    i = 1
+    Levent=[]
+
+    while i <= datamaxid:
+        if datamaxid != None:
+
+            eventdata = Event.query.filter_by(id=i).first()
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
+            Levent.append(payload)
+
+        i = i + 1
+    
+    return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
 
 @views.route("/make_event", methods=['GET', 'POST'])
 @login_required

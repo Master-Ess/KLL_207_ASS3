@@ -181,14 +181,22 @@ def book_ticket():
 
         
     else:
-        datamaxid = Event.query.count()
+
+        get = Event.query.order_by(Event.id.desc()).first()
+        datamaxid = 0
+        if get != None:
+            datamaxid = get.id
+
         i = 1
         Levent=[]
 
         while i <= datamaxid:
-            eventdata = Event.query.filter_by(id=i).first()
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
-            Levent.append(payload)
+            if datamaxid != None:
+
+                eventdata = Event.query.filter_by(id=i).first()
+                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
+                Levent.append(payload)
+                
             i = i + 1
     
         return render_template('book_tickets.html', passevent=Levent, pers=persistant_usr())
@@ -309,7 +317,12 @@ def view_previous_purchases():
     email = current_user.email
     
 
-    datamaxid = Purchase.query.filter(Purchase.user_id == id).count()
+    get = Purchase.query.filter(Purchase.user_id == id).order_by(Purchase.id.desc()).first()
+    datamaxid = 0
+    if get != None:
+        datamaxid = get.id
+
+
     print(datamaxid)
     if datamaxid == 0:
         return render_template("view_previous_purchases.html", email = email, response="User has not purchased any tickets" , pers=persistant_usr())
@@ -321,12 +334,13 @@ def view_previous_purchases():
     while i <= datamaxid:
         
         purchasedata = Purchase.query.filter_by(id=i).first()
-        eventdata = Event.query.filter_by(id = purchasedata.event_id).first()
+        if purchasedata != None:
+            eventdata = Event.query.filter_by(id = purchasedata.event_id).first()
         
-        if int(purchasedata.user_id) == int(id):
+            if int(purchasedata.user_id) == int(id):
             
-            payload = id_purchase(purchasedata.event_id, eventdata.title, eventdata.location, purchasedata.notickets, purchasedata.cost, purchasedata.purchasedate, eventdata.img)        
-            user_purchases.append(payload)
+                payload = id_purchase(purchasedata.event_id, eventdata.title, eventdata.location, purchasedata.notickets, purchasedata.cost, purchasedata.purchasedate, eventdata.img)        
+                user_purchases.append(payload)
             
         i = i + 1
     
@@ -483,7 +497,9 @@ def delete_event(id):
         return render_template("403.html", pers=persistant_usr())
 
     Event.query.filter_by(id=id).delete()
-    print('EVENT DELETED')
+    Comment.query.filter_by(event_id=id).delete()
+    Purchase.query.filter_by(event_id=id).delete()
+    print('EVENT DELETED AND ASSOCIATED COMMETNS AND PURCHASES')
     db.session.commit()
 
     return redirect(url_for('views.index'))

@@ -52,7 +52,7 @@
     <div class = "comment">
 
       <p><a class="delcomment" href = "{{comment.Cdeletelink}}"> {{comment.Cdelete}} </a></p>
-      <p id = "comment_user"> {{comment.Cname}}:</p>
+      <p id = "comment_user"> {{comment.Cname}} {{comment.Clname}}:</p>
       
       <p class = "well"> {{comment.Ccontent}}</p>
     </div>
@@ -67,7 +67,7 @@
   <div class="column">
     <a href="\make_event/{{id}}">
       <div > 
-    <button id="edit_event" class = "{{edit}}" style = "float: right; color: red;">
+    <button id="edit_event" class = "{{edit}}" >
        EDIT EVENT
     </button>
     </div>
@@ -82,7 +82,7 @@
       <h2> POST YOUR COMMENT:</h2>
       <form id = "comment" method = "post">
 
-            <textarea id="descript" name = "descript" class = "form-control"  rows = 8 cols=97 form ="comment" >{{desc}}</textarea> <BR>
+            <textarea id="descript" name = "descript" class = "form-control"  rows = 4 cols=97 form ="comment" >{{desc}}</textarea> <BR>
             <input class = "signin" ID = "TP_button" type="submit"  value="SUBMIT">
       </form>
 

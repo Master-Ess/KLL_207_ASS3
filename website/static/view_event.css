@@ -294,3 +294,15 @@ html #comment_user{
   resize: none;
   margin-bottom: 10pt;
 }
+
+#edit_event{
+  background-color: rgb(255, 6, 0);
+  color: white;
+  float: right;
+  border: none;
+  padding-left: 10pt;
+  padding-right: 10pt;
+  padding-top: 6pt;
+  padding-bottom: 6pt;
+  border-radius: 5pt;
+}

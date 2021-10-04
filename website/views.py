@@ -45,9 +45,10 @@ class id_purchase:
 user_purchases=[]
 
 class eventdisp:
-    def __init__(self, CID, Cname, Ccontent, Cside, Cdelete, Cdeletelink):
+    def __init__(self, CID, Cname, Clname, Ccontent, Cside, Cdelete, Cdeletelink):
         self.CID = CID
         self.Cname = Cname
+        self.Clname = Clname
         self.Ccontent = Ccontent
         self.Cside = Cside
         self.Cdelete = Cdelete
@@ -71,8 +72,6 @@ def persistant_usr():
     return usrinfo
 
 
-    
-
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
@@ -86,7 +85,6 @@ def index():
         if search == None:
             searched = False
 
-    
 
     id = 0
     fname ="Login or Register"
@@ -150,12 +148,20 @@ def book_ticket():
     response = ""
     if request.method == 'POST':
         
-        
+        ntickets = None
         targetevent= request.form.get('event')
-        ntickets = int(request.form.get('ticketno'))       
+        ntickets = request.form.get('ticketno')
+        if ntickets != '':
+            ntickets = int(ntickets)       
         cur_user = str(current_user.id)
         eventdata = Event.query.filter_by(id=targetevent).first()
         
+        
+        
+        if targetevent == "select" or ntickets == '' or ntickets < 1:            
+            response = "Please fill in all boxes"
+            return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
+
         costper = eventdata.ticketcost
         cost = costper * ntickets
         eventmaxtickets = eventdata.tickets
@@ -163,9 +169,7 @@ def book_ticket():
 
         if ntickets > eventmaxtickets:
             response="Please enter a number of tickets that is equal or less than the avalible ammount"
-        else:
-            if targetevent == "select" or ntickets == None or ntickets < 1:            
-                response = "Please fill in all boxes"
+            return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
 
         if status == "Upcomming - TP":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
@@ -190,7 +194,7 @@ def book_ticket():
         datamaxid = get.id
 
     i = 1
-    Levent=[]
+    
 
     while i <= datamaxid:
         if datamaxid != None:
@@ -220,7 +224,6 @@ def make_event():
         cur_user = str(current_user.id)      
 
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
-            print("missing errors")
             return render_template("create_event.html", data = "Please fill in all boxes", pers=persistant_usr())
 
         else:
@@ -240,14 +243,12 @@ def view_event(id):
     if request.method == 'POST':
         if current_user.is_authenticated:
             cdata = request.form.get('descript')
-            print(cdata)
-            print('marker')
             EID = id
             UID = current_user.id
-
-            new_comment = Comment(user_id=UID, event_id=EID, data=cdata)
-            db.session.add(new_comment)
-            db.session.commit()
+            if cdata != '':
+                new_comment = Comment(user_id=UID, event_id=EID, data=cdata)
+                db.session.add(new_comment)
+                db.session.commit()
         else:
             return render_template("login.html")
 
@@ -297,7 +298,7 @@ def view_event(id):
                         cdelete = "DELETE"
                         cdeletelink = "delete/" + str(i) + "/" + str(id)
                     
-                payload = eventdisp(userdata.id, userdata.first_name , commentdata.data, side, cdelete, cdeletelink)   
+                payload = eventdisp(userdata.id, userdata.first_name, userdata.last_name, commentdata.data, side, cdelete, cdeletelink)   
                 event_comment.append(payload)
                 x = x + 1 
             
@@ -325,7 +326,6 @@ def view_previous_purchases():
         datamaxid = get.id
 
 
-    print(datamaxid)
     if datamaxid == 0:
         return render_template("view_previous_purchases.html", email = email, response="User has not purchased any tickets" , pers=persistant_usr())
     

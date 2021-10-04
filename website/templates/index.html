@@ -26,7 +26,7 @@
 <img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class = "bg-green-500">
 
 <nav>
-    <li id=home_tab><a>Home</a></li>
+    <li id=home_tab><a class = "non-active" href="">Home</a></li>
     <li><a class = "non-active" href="make_event">Create an event</a></li>
     <li><a class = "non-active" href="book_tickets">Purchase tickets</a></li>
     
@@ -37,7 +37,18 @@
 </top>
 
 
+<div class = "container  p-3 my-3 border">
+<form name = "search" method = "POST">
 
+  <input class = "signin" type="submit"  value="SEARCH EVENTS">
+
+    <input type = text name = "search" >
+  
+ 
+
+</div>
+
+</form>
 
 <p id ="response" >{{response}}</p>
 

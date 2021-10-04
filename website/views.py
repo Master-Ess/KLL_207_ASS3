@@ -1,5 +1,6 @@
 from operator import countOf
 from os import stat
+from sre_constants import MARK
 from flask import Blueprint, render_template, request, url_for
 from flask.wrappers import Response
 from flask_login import login_required, current_user
@@ -8,6 +9,7 @@ from werkzeug.utils import redirect
 from .models import Event, User, Comment, Purchase
 from random import *
 from . import db
+import re
 
 
 views = Blueprint('views', __name__)
@@ -51,6 +53,17 @@ event_comment=[]
 @views.route('/', methods=['GET', 'POST'])
 def index():
 
+    searched = False
+    if request.method == 'POST':
+        search = str(request.form.get("search"))
+        search = search.lower()
+        searched = True
+
+        if search == None:
+            searched = False
+
+    
+
     id = 0
     fname ="Login or Register"
     sname =""
@@ -67,15 +80,37 @@ def index():
     datamaxid = Event.query.count()
     Levent=[]
     i = 1
+    s = 1
+    print("marker 1")
     
     while i <= datamaxid:
+        print("marker 2")
         eventdata = Event.query.filter_by(id=i).first()
-        side = "right"
-        if (i % 2) == 0:
-            side = "left"
-        payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
-        Levent.append(payload)
-        i = i + 1
+        if searched == True:
+            print("marker 3")
+            x = re.findall(search, eventdata.title.lower())
+            y = re.findall(search, eventdata.location.lower())
+            z = re.findall(search, eventdata.data.lower())
+            
+            if(x) or (y) or (z):
+                    
+                side = "right"
+                if (s % 2) == 0:
+                    side = "left"
+                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
+                Levent.append(payload)
+                s = s + 1
+                
+            i = i + 1    
+        else:
+            print("marker 4")
+            side = "right"
+            if (s % 2) == 0:
+                side = "left"
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
+            Levent.append(payload)
+            s = s + 1
+            i = i + 1
         
         
 
@@ -440,4 +475,4 @@ def delete_comment(id,adr):
     db.session.commit()
     link = "/view_event/" + str(adr)
 
-    return redirect( link ,code = 302)
+    return redirect( link , code = 302)

@@ -10,9 +10,6 @@ Webpages Missing:
 -----
 Web functionality missing:
 
-Problem with purchasing tickets when the event is unpurchasesable
-
-Delete ticket purchases when events deleted 
 
 -----
 Potentials:

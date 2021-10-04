@@ -394,3 +394,8 @@ html #current_tab {
 html .non-active{
   color: white;
 }
+
+#active{
+  background-color: white !important;
+  color: rgb(255, 6, 0) !important;
+}

@@ -81,13 +81,13 @@ def index():
     Levent=[]
     i = 1
     s = 1
-    print("marker 1")
+    
     
     while i <= datamaxid:
-        print("marker 2")
+        
         eventdata = Event.query.filter_by(id=i).first()
         if searched == True:
-            print("marker 3")
+            
             x = re.findall(search, eventdata.title.lower())
             y = re.findall(search, eventdata.location.lower())
             z = re.findall(search, eventdata.data.lower())
@@ -103,7 +103,7 @@ def index():
                 
             i = i + 1    
         else:
-            print("marker 4")
+            
             side = "right"
             if (s % 2) == 0:
                 side = "left"
@@ -214,18 +214,20 @@ def view_event(id):
         else:
             return render_template("login.html")
 
-    editdata = ""
+    editdata = "hide"
 
     alldata = Event.query.filter_by(id=id).first()
     if current_user.is_authenticated:
         if int(current_user.id) == int(alldata.user_id):
-            editdata = "Edit Event"
+            editdata = "edit_event"
 
     if alldata == None:
         return render_template("404.html")
 
     name = alldata.title
+    name = name.upper()
     location = alldata.location
+    location = location.upper()
     date = alldata.date
     tickets = alldata.tickets
     data = alldata.data

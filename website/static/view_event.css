@@ -199,9 +199,6 @@ li a:hover {
 }
 
 #TR_txt{
-  border: 3px solid rgb(255, 6, 0);
-  background-color: rgb(21,21,30);
-  color: white;
   padding-left: 2%;
   margin-right: 38%;
 }
@@ -211,28 +208,39 @@ li a:hover {
   height: 50pt;
   font-size: x-large;
   font-family: "Titillium Web";
+  background-color: rgb(255, 6, 0);
+  color: white !important;
+  border: NONE;
+  border-radius: 5pt;
 }
 
 html #comment_user{
+  padding-top: 6pt;
   font-size: larger;
+  margin-bottom: 10pt;
   }
   
   html .comment{
-    margin-bottom: 10pt;
-    border: 2px solid black;
-    background-color: gray;
+    margin-bottom: 0pt;
+    /* border: 2px solid black;  */
+    border-radius: 5pt;
+    background-color: rgb(255, 6, 0);
     color: white;
     padding-left: 10pt;
-    
     margin-right: 0;
   }
   
-  html .comment_image{
-    float: left;
-    margin-right: 10pt;
-    margin-top: 15pt;
-    width: 50pt;
-    border-radius: 50%;
+  .delcomment{
+    color: white;
+    float: right;
+    padding-right: 10pt;
+    padding-top: 6pt;
+    text-decoration: none;
+    
+  }
+
+  .well{
+    padding-bottom: 10pt;
   }
 
  textarea{
@@ -257,34 +265,28 @@ html #comment_user{
     position: absolute;right:0;
   }
 
-  #edit_event{
-  font-family: "Titillium Web";
-  float: right;
-  box-shadow: none;
-  padding: 5pt;
-  padding-left: 25pt;
-  padding-right: 25pt;
-  color: rgb(255, 6, 0) !important;
-  border: none;
-  border-radius: 5pt; 
-  margin-bottom: 15pt;  
-  text-decoration: none !important;
+ 
+
+  
+ 
+  hr.topthird {
+    border-top: 0.5px solid rgb(208,208,210);
+    margin-bottom: 20pt;
   }
 
-  .cleft{
-    float: left;
-  }
-
-  .cright{
-    float: right;
-  }
-
-  textarea{
-    border: 1px solid black;
-    border-radius: 4px;
-    width: 90%;
-    font-family: "Titillium Web";
-    resize: none;
-  }
   
  }
+
+.hide{
+    background-color: red;
+    display:none;
+ 
+  }
+
+#descript{
+  border: 1px solid black;
+  border-radius: 4px;
+  font-family: "Titillium Web";
+  resize: none;
+  margin-bottom: 10pt;
+}

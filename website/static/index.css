@@ -270,8 +270,9 @@ html body{
 
 
 html #home_tab {
+  color:rgb(255, 6, 0) !important;
   background-color: white;
-  color:rgb(255, 6, 0) ;  
+    
 }
 
 html #tertiary_image{
@@ -282,134 +283,7 @@ html #tertiary_image{
   text-align: center;
 }
 
-/* .cx-reset-button{
-  visibility: hidden;
-} */
 
-/* buttons  */
-
-#driver-button{
-  
-  display:none
-  
-}    
-
-.cx-driver-button{
-  padding-left: 10pt;
-}
-
-#driver-button:checked 
-~ #testing_lable{
-  display: initial;
-}
-
-#driver-button:checked
-~ #tertiary_artice{
-  display:none;
-}
-
-#driver-button:checked
-~ #secondary_article{
-  display:none;
-}
-
-
-#driver-button:checked 
-~ label 
-.cx-driver-button{color: rgb(255, 6, 0);}
-
-#driver-button:checked
-~ .cx-reset-button{
-  visibility: visible;
-}
-
-
-
-/* 
-next button */
-
-#activate-div{
-  display:none
-}    
-
-#activate-div:checked 
-~ #testing_lable{
-  display: none;
-}
-
-#activate-div:checked
-~ #tertiary_artice{
-  display:none;
-}
-
-#activate-div:checked
-~ #secondary_artice{
-  display:initial;
-}
-
-
-#activate-div:checked 
-~ label 
-.my-div{color: rgb(255, 6, 0);}
-
-#activate-div:checked
-~ .cx-reset-button{
-  visibility: visible;
-}
-
-/* 
-next button */
-
-#music-button{
-  display:none
-}    
-
-#music-button:checked 
-~ #testing_lable{
-  display: none;
-}
-
-#music-button:checked
-~ #tertiary_artice{
-  display:initial;
-}
-
-#music-button:checked
-~ #secondary_article{
-  display:none;
-}
-
-
-#music-button:checked 
-~ label 
-.cx-music-button{color: rgb(255, 6, 0);}
-
-#music-button:checked
-~ .cx-reset-button{
-  visibility: visible;
-}
-
-/* 
-next button */
-
-#reset-button{
-  display:none
-}    
-
-#reset-button:checked 
-~ #testing_lable{
-  display: initial;
-}
-
-#reset-button:checked
-~ #tertiary_artice{
-  display:initial;
-}
-
-#reset-button:checked
-~ #secondary_article{
-  display:initial;
-}
 
 @media screen and (max-width: 1250px) {
   .fcolumn {

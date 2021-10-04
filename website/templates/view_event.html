@@ -36,17 +36,23 @@
 <div class="row">
   <div class="column">
     <h2>{{event_name}} - {{event_location}}</h2>
+
+    <hr class="topthird">
+
     <h3> {{event_date}}</h3>
     <p id="datablock">{{event_data}}
     </p>
 
-    <h2> Comments:</h2>
+    <hr class="topthird">
+
+    <h2> COMMENTS:</h2>
     {% for comment in passcomment %}
     <div class = "{{comment.Cside}}">
     <div class = "comment">
       
+      <p><a class="delcomment" href = "{{comment.Cdeletelink}}"> {{comment.Cdelete}} </a></p>
       <p id = "comment_user"> {{comment.Cname}}:</p>
-      <p><a href = "{{comment.Cdeletelink}}"> {{comment.Cdelete}} </a></p>
+      
       <p class = "well"> {{comment.Ccontent}}</p>
     </div>
   </div>
@@ -59,22 +65,24 @@
 
   <div class="column">
     <a href="\make_event/{{id}}">
-    <button id="edit_event" style = "float: right; color: red;">
-       {{edit}}
+      <div > 
+    <button id="edit_event" class = "{{edit}}" style = "float: right; color: red;">
+       EDIT EVENT
     </button>
+    </div>
   </a>
     <img class="side_image" src= {{event_image}} 
         alt="Maxibon"><br>
  
-      <h2 id = "TR_txt"> Tickets Remaining: {{event_tickets}} &nbsp; &nbsp; &nbsp; Status: {{status}}</h2> 
+      <h2 id = "TR_txt"> TICKETS REMAINING: &nbsp; {{event_tickets}} &nbsp; &nbsp; &nbsp; STATUS: &nbsp; {{status}}</h2> 
 
-      <a href = "\book_tickets"> <input id = "TP_button" type="submit" value="Purchase now"></a><br>
+      <a href = "\book_tickets"> <input id = "TP_button" type="submit" value="PURCHASE NOW"></a><br>
 
-      <h2> Post Comment:</h2>
+      <h2> POST YOUR COMMENT:</h2>
       <form id = "comment" method = "post">
 
-            <textarea id="descript" name = "descript" class = "form-control"  rows = 8 cols=97 form ="comment" >{{desc}}</textarea> 
-            <input class = "signin" type="submit"  value="SUBMIT">
+            <textarea id="descript" name = "descript" class = "form-control"  rows = 8 cols=97 form ="comment" >{{desc}}</textarea> <BR>
+            <input class = "signin" ID = "TP_button" type="submit"  value="SUBMIT">
       </form>
 
       <!-- <textarea rows="4" cols="60"></textarea><br> -->

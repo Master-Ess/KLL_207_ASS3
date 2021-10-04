@@ -218,11 +218,13 @@ html #comment_user{
   }
   
   html .comment{
+    margin-bottom: 10pt;
     border: 2px solid black;
     background-color: gray;
     color: white;
     padding-left: 10pt;
-    margin-right: 50%;
+    
+    margin-right: 0;
   }
   
   html .comment_image{
@@ -269,4 +271,20 @@ html #comment_user{
   text-decoration: none !important;
   }
 
+  .cleft{
+    float: left;
+  }
+
+  .cright{
+    float: right;
+  }
+
+  textarea{
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 90%;
+    font-family: "Titillium Web";
+    resize: none;
+  }
+  
  }

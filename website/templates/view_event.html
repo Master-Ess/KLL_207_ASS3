@@ -41,13 +41,16 @@
     </p>
 
     <h2> Comments:</h2>
-    
+    {% for comment in passcomment %}
+    <div class = "{{comment.Cside}}">
     <div class = "comment">
-      <img class="comment_image" src="https://pbs.twimg.com/profile_images/1345158219522478082/o4v2ryd6_400x400.jpg" 
-        alt="max-verstappen">
-      <p id = "comment_user"> Daniel Riccardo:</p>
-      <p class = "well"> YES!</p>
-   </div>
+      
+      <p id = "comment_user"> {{comment.Cname}}:</p>
+      <p class = "well"> {{comment.Ccontent}}</p>
+    </div>
+  </div>
+    {% endfor %}
+    
   </div>
   
 
@@ -67,7 +70,13 @@
       <a href = "\book_tickets"> <input id = "TP_button" type="submit" value="Purchase now"></a><br>
 
       <h2> Post Comment:</h2>
-      <textarea rows="4" cols="60"></textarea><br>
+      <form id = "comment">
+
+            <textarea id="descript" name = "descript" class = "form-control"  rows = 8 cols=97 form ="comment" >{{desc}}</textarea> 
+        
+      </form>
+
+      <!-- <textarea rows="4" cols="60"></textarea><br> -->
       <button id="submit_comment"> Submit comment</button>
     
       

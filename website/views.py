@@ -36,6 +36,15 @@ class id_purchase:
 
 user_purchases=[]
 
+class eventdisp:
+    def __init__(self, CID, Cname, Ccontent, Cside):
+        self.CID = CID
+        self.Cname = Cname
+        self.Ccontent = Ccontent
+        self.Cside = Cside
+
+event_comment=[]
+
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
@@ -154,11 +163,13 @@ def make_event():
     
     return render_template("create_event.html" , delete="invis", status="Select")
 
-@views.route("/view_event/<id>")
+@views.route("/view_event/<id>", methods=['GET', 'POST'])
 def view_event(id):
-    editdata = ""
-
+    if request.method == 'POST':
+        pass
     
+
+    editdata = ""
 
     alldata = Event.query.filter_by(id=id).first()
     if current_user.is_authenticated:
@@ -176,9 +187,29 @@ def view_event(id):
     img = alldata.img
     status = alldata.status
 
+    email = current_user.email
     
 
-    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img, edit=editdata, status=status, id=id)
+    datamaxid = Comment.query.filter(Comment.event_id == id).count()
+
+    i = 1
+    x = 1
+    event_comment=[]
+    while i <= datamaxid:
+        
+        commentdata = Comment.query.filter_by(id  = i).first()
+        if int(commentdata.event_id) == int(id):
+            userdata = User.query.filter_by(id=commentdata.user_id).first()
+            side = "cleft"
+            if (x % 2) == 0:
+                side = "cright"
+            payload = eventdisp(current_user.id, userdata.first_name , commentdata.data, side)   
+            event_comment.append(payload)
+            x = x + 1 
+            
+        i = i + 1
+
+    return render_template("view_event.html" ,event_name=name , event_location=location ,event_date=date, event_data=data, event_tickets=tickets, event_image=img, edit=editdata, status=status, id=id, passcomment=event_comment)
 
 @views.route("/view_previous_purchases")
 @login_required

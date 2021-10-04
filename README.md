@@ -9,6 +9,8 @@ Webpages Missing:
 
 Restyle View event 
 
+Nav bar fixes
+
 -----
 Web functionality missing:
 

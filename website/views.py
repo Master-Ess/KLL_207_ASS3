@@ -37,19 +37,19 @@ class id_purchase:
 user_purchases=[]
 
 class eventdisp:
-    def __init__(self, CID, Cname, Ccontent, Cside):
+    def __init__(self, CID, Cname, Ccontent, Cside, Cdelete, Cdeletelink):
         self.CID = CID
         self.Cname = Cname
         self.Ccontent = Ccontent
         self.Cside = Cside
+        self.Cdelete = Cdelete
+        self.Cdeletelink = Cdeletelink
 
 event_comment=[]
 
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
-
-    print(str(randint(1,5)))
 
     id = 0
     fname ="Login or Register"
@@ -61,7 +61,7 @@ def index():
         alldata = User.query.filter_by(id=id).first()
         fname = alldata.first_name
         sname = alldata.last_name
-        payload = "edit_account/" + str(id)
+        tpayload = "edit_account/" + str(id)
         id = str(id)
     
     datamaxid = Event.query.count()
@@ -166,8 +166,18 @@ def make_event():
 @views.route("/view_event/<id>", methods=['GET', 'POST'])
 def view_event(id):
     if request.method == 'POST':
-        pass
-    
+        if current_user.is_authenticated:
+            cdata = request.form.get('descript')
+            print(cdata)
+            print('marker')
+            EID = id
+            UID = current_user.id
+
+            new_comment = Comment(user_id=UID, event_id=EID, data=cdata)
+            db.session.add(new_comment)
+            db.session.commit()
+        else:
+            return render_template("login.html")
 
     editdata = ""
 
@@ -187,25 +197,35 @@ def view_event(id):
     img = alldata.img
     status = alldata.status
 
-    email = current_user.email
-    
-
-    datamaxid = Comment.query.filter(Comment.event_id == id).count()
+    get = Comment.query.filter(Comment.event_id == id).order_by(Comment.id.desc()).first()
+    datamaxid = 0
+    if get != None:
+        datamaxid = get.id
 
     i = 1
     x = 1
     event_comment=[]
+    
     while i <= datamaxid:
-        
         commentdata = Comment.query.filter_by(id  = i).first()
-        if int(commentdata.event_id) == int(id):
-            userdata = User.query.filter_by(id=commentdata.user_id).first()
-            side = "cleft"
-            if (x % 2) == 0:
-                side = "cright"
-            payload = eventdisp(current_user.id, userdata.first_name , commentdata.data, side)   
-            event_comment.append(payload)
-            x = x + 1 
+        if commentdata != None:
+            cdelete = ""
+            cdeletelink = ""
+
+            
+            if int(commentdata.event_id) == int(id):
+                userdata = User.query.filter_by(id=commentdata.user_id).first()
+                side = "cleft"
+                if (x % 2) == 0:
+                    side = "cright"
+                if current_user.is_authenticated:
+                    if current_user.id == userdata.id:
+                        cdelete = "DELETE"
+                        cdeletelink = "delete/" + str(i) + "/" + str(id)
+                    
+                payload = eventdisp(userdata.id, userdata.first_name , commentdata.data, side, cdelete, cdeletelink)   
+                event_comment.append(payload)
+                x = x + 1 
             
         i = i + 1
 
@@ -401,3 +421,23 @@ def delete_event(id):
     db.session.commit()
 
     return redirect(url_for('views.index'))
+
+@views.route("/view_event/delete/<id>/<adr>")
+@login_required
+def delete_comment(id,adr):
+
+    alldata = Comment.query.filter_by(id=id).first()
+
+
+    if alldata == None:
+        return render_template("404.html")
+
+    if str(current_user.id) != str(alldata.user_id):
+        return render_template("403.html")
+
+    Comment.query.filter_by(id=id).delete()
+    print('COMMENT DELETED')
+    db.session.commit()
+    link = "/view_event/" + str(adr)
+
+    return redirect( link ,code = 302)

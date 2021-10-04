@@ -20,7 +20,3 @@ Potentials:
 
 Search functionality
 
------
-Already implemented functionality
-
-Categories --> USED CSS, might need to use JS

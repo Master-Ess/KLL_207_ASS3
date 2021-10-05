@@ -369,34 +369,39 @@ def edit_account(id):
 
         #if you submit a NONE it freaks out so you gotta do a bunch of shit like this, i could probably write a def to do it but i cbf
         value = request.form.get('title')
-        if value != None:
+        if value != None and value != 'select':
             alldata.title = value
             db.session.commit() 
 
         value = request.form.get('fname')
-        if value != None:
+        if value != None and len(value) > 2:
             alldata.first_name = value
             db.session.commit()  
 
         value = request.form.get('lname')
-        if value != None:
+        if value != None and len(value) > 2:
             alldata.last_name = value
             db.session.commit()          
 
         value = request.form.get('DOB')
-        if value != None:
+        if value != None and len(value) > 9:
             alldata.dateofbirth = value
             db.session.commit() 
 
         value = request.form.get('Country')
-        if value != None:
+        if value != None and value != 'select':
             alldata.country = value
             db.session.commit()  
 
         value = request.form.get('email')
-        if value != None:
+        if value != None and len(value) > 4:
             alldata.email = value
-            db.session.commit()   
+            db.session.commit()  
+
+        value = request.form.get('phone')
+        if value != None and len(value) > 8:
+            alldata.phone = value
+            db.session.commit() 
 
         return redirect(url_for('views.index'))
 
@@ -417,8 +422,9 @@ def edit_account(id):
         dateofbirth = alldata.dateofbirth
         country = alldata.country
         email = alldata.email
+        phone = alldata.phn
 
-        return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email , pers=persistant_usr())
+        return render_template("edit_account.html", title=title, fname=fname, lname=lname, dateofbirth=dateofbirth, country=country, email=email , phn = phone, pers=persistant_usr())
 
 @views.route("/make_event/<id>", methods=['GET', 'POST'])
 @login_required

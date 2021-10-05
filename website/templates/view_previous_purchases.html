@@ -54,7 +54,7 @@
           {% for purchase in passpurchase %}
           <a href="\view_event/{{purchase.EID}}"><img src={{purchase.img}} style="height:60pt; float:right"></a>
           <p><b>{{purchase.Etitle}}</b> - {{purchase.Elocation}} - {{purchase.tickets}} Tickets - ${{purchase.cost}} </p>
-          <p>Purchased on: {{purchase.date}}</p>
+          <p>Purchased on: {{purchase.date}} &nbsp; &nbsp; &nbsp; PID: {{purchase.PID}} </p>
           <hr class="topthird">
           {% endfor %}
           

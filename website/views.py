@@ -21,19 +21,21 @@ usrinfo = ['Login or Register','','\login']
 
 
 class IDV_Event:
-    def __init__(self, EID, title, location, cost, desc, img, side):
+    def __init__(self, EID, title, location, cost, desc, img, date, status, side):
         self.EID = EID
         self.title = title
         self.location = location
         self.cost = cost
         self.desc = desc
         self.img = img
+        self.date = date
+        self.status = status
         self.side = side
 
 Levent=[]
 
 class id_purchase:
-    def __init__(self, EID, Etitle, Elocation, tickets, cost, date, img):
+    def __init__(self, EID, Etitle, Elocation, tickets, cost, date, img, PID):
         self.EID = EID
         self.Etitle = Etitle
         self.Elocation = Elocation
@@ -41,11 +43,12 @@ class id_purchase:
         self.cost = cost
         self.date = date
         self.img = img
+        self.PID = PID
 
 user_purchases=[]
 
 class eventdisp:
-    def __init__(self, CID, Cname, Clname, Ccontent, Cside, Cdelete, Cdeletelink):
+    def __init__(self, CID, Cname, Clname, Ccontent, Cside, Cdelete, Cdeletelink, Cdate):
         self.CID = CID
         self.Cname = Cname
         self.Clname = Clname
@@ -53,6 +56,7 @@ class eventdisp:
         self.Cside = Cside
         self.Cdelete = Cdelete
         self.Cdeletelink = Cdeletelink
+        self.Cdate = Cdate
 
 event_comment=[]
 
@@ -75,8 +79,9 @@ def persistant_usr():
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
-
+    
     searched = False
+
     if request.method == 'POST':
         search = str(request.form.get("search"))
         search = search.lower()
@@ -130,7 +135,7 @@ def index():
             side = "right"
             if (s % 2) == 0:
                 side = "left"
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side)        
             Levent.append(payload)
             s = s + 1
             i = i + 1
@@ -143,6 +148,7 @@ def index():
 @login_required
 def book_ticket():
     response = ""
+    Levent=[]
     if request.method == 'POST':
         
         ntickets = None
@@ -165,16 +171,22 @@ def book_ticket():
         status = eventdata.status
 
         if ntickets > eventmaxtickets:
-            response="Please enter a number of tickets that is equal or less than the avalible ammount"
+            if status == "Booked":
+                response="Selected  event is fully booked"
+            else:
+                response="Please enter a number of tickets that is equal or less than the avalible ammount"
+
             return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
 
-        if status == "Upcomming - TP":
+        if status == "Upcomming":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
             db.session.add(new_purchase)
             E = eventdata.tickets
             remaining_tickets = ( int(E) - int(ntickets))
             remaining_tickets_s = str(remaining_tickets)
             eventdata.tickets = remaining_tickets_s
+            if remaining_tickets_s == "0":
+                eventdata.status = "Booked"
             db.session.commit()
             print('Purchase successful')
             return redirect(url_for('views.index'))
@@ -197,7 +209,7 @@ def book_ticket():
         if datamaxid != None:
 
             eventdata = Event.query.filter_by(id=i).first()
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
             Levent.append(payload)
 
         i = i + 1
@@ -295,7 +307,7 @@ def view_event(id):
                         cdelete = "DELETE"
                         cdeletelink = "delete/" + str(i) + "/" + str(id)
                     
-                payload = eventdisp(userdata.id, userdata.first_name, userdata.last_name, commentdata.data, side, cdelete, cdeletelink)   
+                payload = eventdisp(userdata.id, userdata.first_name, userdata.last_name, commentdata.data, side, cdelete, cdeletelink, commentdata.date)   
                 event_comment.append(payload)
                 x = x + 1 
             
@@ -338,7 +350,7 @@ def view_previous_purchases():
         
             if int(purchasedata.user_id) == int(id):
             
-                payload = id_purchase(purchasedata.event_id, eventdata.title, eventdata.location, purchasedata.notickets, purchasedata.cost, purchasedata.purchasedate, eventdata.img)        
+                payload = id_purchase(purchasedata.event_id, eventdata.title, eventdata.location, purchasedata.notickets, purchasedata.cost, purchasedata.purchasedate, eventdata.img, purchasedata.id)        
                 user_purchases.append(payload)
             
         i = i + 1

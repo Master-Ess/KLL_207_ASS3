@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     dateofbirth = db.Column(db.String(10), nullable=False)
     country = db.Column(db.String(3), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
-    img = db.Column(db.String(500))
+    phn = db.Column(db.String(10))
     Events = db.relationship('Event')
     Comments = db.relationship('Comment')
     Purchase = db.relationship('Purchase')

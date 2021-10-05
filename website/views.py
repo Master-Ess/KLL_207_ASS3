@@ -69,9 +69,9 @@ def persistant_usr():
         pfname = current_user.first_name
         plname = current_user.last_name
         purl = "\edit_account/" + str(current_user.id)
-
+        usrinfo = [pfname, plname, purl]    
     
-    usrinfo = [pfname, plname, purl]    
+    
     
     return usrinfo
 
@@ -140,7 +140,7 @@ def index():
             s = s + 1
             i = i + 1
 
-    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent )
+    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent, pers = persistant_usr())
 
 
 
@@ -540,3 +540,4 @@ def delete_comment(id,adr):
     link = "/view_event/" + str(adr)
 
     return redirect( link , code = 302)
+

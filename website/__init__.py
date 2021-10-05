@@ -14,7 +14,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .views import views
+    from .views import views, persistant_usr
     from .auth import auth
 
     app.register_blueprint(views, url_prefix='/')
@@ -36,23 +36,23 @@ def create_app():
     @app.errorhandler(404)
     def page_not_found(e):
     #404 status set explicitly
-        return render_template('404.html'), 404
+        return render_template('404.html', pers=persistant_usr), 404
 
     @app.errorhandler(403)    
     def page_forbidden(e):
       #403 status set explicitly
-        return render_template('403.html'), 403
+        return render_template('403.html', pers=persistant_usr), 403
  
 
     @app.errorhandler(410)    
     def page_gone(e):
       #410 status set explicitly
-        return render_template('410.html'), 410
+        return render_template('410.html', pers=persistant_usr), 410
 
     @app.errorhandler(500)    
     def internal_error(e):
       #500 status set explicitly
-        return render_template('500.html'), 500
+        return render_template('500.html', pers=persistant_usr), 500
 
 
     return app

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <title>Formula 1: The World Championship</title>
-<head>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- <link rel="stylesheet" href='CSS/index.css'> -->
@@ -22,41 +22,41 @@
 
 </header>
 
-<top>
+
 <img id="toplogo" src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" alt="F1 Logo" class = "bg-green-500">
 
 <nav>
-    <li id=home_tab> <a id=home_tab href="">Home</a></li>
+    <li> <a id=home_tab href="">Home</a></li>
     <li><a class = "non-active" href="make_event">Create an event</a></li>
     <li><a class = "non-active" href="book_tickets">Purchase tickets</a></li>
     <li><a class = "non-active" href="view_previous_purchases">View previously purchased tickets</a></li>
     <li class = "usertab"><a href={{payload}}>{{first}} {{second}}</a></li>
         
 </nav>
-</top>
+
 
 
 <div class = "container  p-3 my-3 border">
-<form name = "search" method = "POST">
+ <form name = "search" method = "POST">
 
   <input class = "signin" type="submit"  value="SEARCH EVENTS">
 
     <input type = text name = "search" >
   
- 
+ </form>
 
 </div>
 
-</form>
+
 
 <p id ="response"  class = {{fixer}}>{{response}}</p>
 
 {% for event in passevent %}
 <div id="testing_lable" >
-  <a href = "view_event/{{event.EID}}">
+  
 
   <div class = "container  p-3 my-3 border">
-
+<a href = "view_event/{{event.EID}}">
      <img id="headline_image" src="{{event.img}}" 
       alt="Max Verstappen" class={{event.side}}></a>
 

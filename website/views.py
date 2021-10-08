@@ -76,7 +76,7 @@ def persistant_usr():
 def index():
     
     searched = False
-
+    response = ""
     if request.method == 'POST':
         search = str(request.form.get("search"))
         search = search.lower()
@@ -121,7 +121,7 @@ def index():
                 side = "right"
                 if (s % 2) == 0:
                     side = "left"
-                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data , eventdata.img, side)        
+                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side)        
                 Levent.append(payload)
                 s = s + 1
                 
@@ -135,8 +135,12 @@ def index():
             Levent.append(payload)
             s = s + 1
             i = i + 1
+    fixer = "none"
+    if s == 1:
+        fixer = "extra"
+        response = "No events found"   
 
-    return render_template("index.html", first=fname, second=sname, payload=tpayload, passevent=Levent, pers = persistant_usr())
+    return render_template("index.html", first=fname, second=sname, payload=tpayload, response = response, passevent=Levent, fixer = fixer, pers = persistant_usr())
 
 
 

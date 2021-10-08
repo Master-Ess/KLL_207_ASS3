@@ -228,15 +228,34 @@ def make_event():
         location = request.form.get('location')
         cur_user = str(current_user.id)      
 
+        
+        suffex = [".jpg", ".png", ".jpeg", ".raw", ".jp2", ".jng", ".jps", ".gif", ".pict", ".psd", ".pdd", ".pnm"]
+        i = 0
+        a = 0
+
+        while i < 13:
+            a = re.findall(suffex[i], URL.lower())
+            
+            if (a):
+                print("IMG file type is ", suffex[i])
+                break
+
+            i = i + 1
+       
+        
         if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
             return render_template("create_event.html", data = "Please fill in all boxes", pers=persistant_usr())
 
-        else:
+        elif (a):
             new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
             db.session.add(new_event)
             db.session.commit()
             print('Event created or Updated!')
-        return redirect(url_for('views.index'))
+            return redirect(url_for('views.index'))
+        else:
+            return render_template("create_event.html", data = "Please use a valid file format for the image", pers=persistant_usr())
+
+        
     
     return render_template("create_event.html" , delete="invis", status="Select", pers=persistant_usr())
 
@@ -450,7 +469,21 @@ def edit_event(id):
             db.session.commit() 
 
         value = request.form.get('URL')
-        if value != None:
+
+        suffex = [".jpg", ".png", ".jpeg", ".raw", ".jp2", ".jng", ".jps", ".gif", ".pict", ".psd", ".pdd", ".pnm"]
+        i = 0
+        a = 0
+
+        while i < 13:
+            a = re.findall(suffex[i], value.lower())
+            
+            if (a):
+                print("IMG file type is ", suffex[i])
+                break
+
+            i = i + 1
+
+        if value != None and (a):
             alldata.img = value
             db.session.commit()  
 

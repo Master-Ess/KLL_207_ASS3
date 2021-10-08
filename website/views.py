@@ -1,10 +1,5 @@
-from operator import countOf
-from os import stat
-from sre_constants import MARK
 from flask import Blueprint, render_template, request, url_for
-from flask.wrappers import Response
 from flask_login import login_required, current_user
-from sqlalchemy import event, update
 from werkzeug.utils import redirect
 from .models import Event, User, Comment, Purchase
 from random import *
@@ -106,7 +101,7 @@ def index():
         id = str(id)
     
     datamaxid = Event.query.count()
-    
+
     Levent=[]
     i = 1
     s = 1

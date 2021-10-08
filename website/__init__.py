@@ -20,8 +20,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Event
-
+    from .models import User
     create_database(app)
 
     login_manager = LoginManager()
@@ -35,23 +34,23 @@ def create_app():
    
     @app.errorhandler(404)
     def page_not_found(e):
-    #404 status set explicitly
+      # 404 status set explicitly
         return render_template('404.html', pers=persistant_usr), 404
 
     @app.errorhandler(403)    
     def page_forbidden(e):
-      #403 status set explicitly
+      # 403 status set explicitly
         return render_template('403.html', pers=persistant_usr), 403
  
 
     @app.errorhandler(410)    
     def page_gone(e):
-      #410 status set explicitly
+      # 410 status set explicitly
         return render_template('410.html', pers=persistant_usr), 410
 
     @app.errorhandler(500)    
     def internal_error(e):
-      #500 status set explicitly
+      # 500 status set explicitly
         return render_template('500.html', pers=persistant_usr), 500
 
 

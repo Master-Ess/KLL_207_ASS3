@@ -106,6 +106,7 @@ def index():
         id = str(id)
     
     datamaxid = Event.query.count()
+    
     Levent=[]
     i = 1
     s = 1

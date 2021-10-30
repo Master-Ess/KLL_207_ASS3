@@ -204,6 +204,10 @@ html .fcolumn {
     padding-top: 20%;
     text-align: center;
   }
+
+  html #top_container{
+    padding-top: 500pt;
+  }
 }
 
 

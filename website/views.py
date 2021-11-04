@@ -174,7 +174,7 @@ def book_ticket():
             if status == "Booked":
                 response="Selected  event is fully booked"
             else:
-                response="Please enter a number of tickets that is equal or less than the avalible amount"
+                response="Please enter a number of tickets that is equal or less than the available amount"
 
             return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
 
@@ -248,7 +248,7 @@ def make_event():
             i = i + 1
        
         
-        if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7:
+        if len(ename) < 1 or len(ntickets) < 1 or len(DOE) < 9 or len(URL) < 1 or len(cost) < 1 or len(status) < 7 or category == 'Select':
             return render_template("create_event.html", data = "Please fill in all boxes", pers=persistant_usr())
 
         elif (a):
@@ -258,7 +258,7 @@ def make_event():
             print('Event created or Updated!')
             return redirect(url_for('views.index'))
         else:
-            return render_template("create_event.html", data = "Please use a valid file format for the image", pers=persistant_usr())
+            return render_template("create_event.html", data = "Please use a valid file format for the image", delete="invis", status="Select", pers=persistant_usr())
 
         
     

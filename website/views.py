@@ -227,6 +227,7 @@ def make_event():
         status = request.form.get('status')
         DOE = request.form.get('DOE')
         URL = request.form.get('URL')
+        category = request.form.get('category')
         cost = request.form.get('cost')
         descript = request.form.get('descript')
         location = request.form.get('location')

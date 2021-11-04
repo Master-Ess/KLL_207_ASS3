@@ -101,15 +101,18 @@ def index():
         tpayload = "edit_account/" + str(id)
         id = str(id)
     
-    datamaxid = Event.query.count()
-
+    datamaxid = 0
+    get = Event.query.order_by(Event.id.desc()).first()
+    if get != None:
+        datamaxid = get.id
+                
     Levent=[]
     i = 1
     s = 1
     
     
     while i <= datamaxid:
-        
+        eventdata = None
         eventdata = Event.query.filter_by(id=i).first()
         if searched == True:
             
@@ -128,13 +131,13 @@ def index():
                 
             i = i + 1    
         else:
-            
-            side = "right"
-            if (s % 2) == 0:
-                side = "left"
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
-            Levent.append(payload)
-            s = s + 1
+            if (eventdata != None):
+                side = "right"
+                if (s % 2) == 0:
+                    side = "left"
+                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
+                Levent.append(payload)
+                s = s + 1
             i = i + 1
     fixer = "none"
     if s == 1:

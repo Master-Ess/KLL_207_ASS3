@@ -108,6 +108,16 @@
             <input type="text" id="cost" name="cost" placeholder="$" maxlength="3" Value = {{cost}}> 
         </div>
         <br>
+        <label for="category">Category</label><br>
+        <div class = short-entry> 
+        <select id="category" name="category" Value = {{category}}>
+          <option value={{category}}>{{category}}</option>
+          <option value="Performance">Performance</option>
+          <option value="Race">Race</option>
+          <option value="Social">Social</option>
+          <option value="Panel">Panel</option>
+        </select>
+        </div>
         <input id="submit-form" class = "hidden" for="CEF" type="submit" value="SUBMIT" >
       
         <label for="desc">Event Description</label><br>

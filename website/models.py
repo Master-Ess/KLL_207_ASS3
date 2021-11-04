@@ -9,6 +9,7 @@ class Event(db.Model):
     data = db.Column(db.String(10000))
     img = db.Column(db.String(500), nullable=False)
     status = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(500), nullable=False)
     tickets = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(10))
     ticketcost = db.Column(db.Integer, nullable=False)

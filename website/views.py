@@ -191,7 +191,7 @@ def book_ticket():
             print('Purchase successful')
             return redirect(url_for('views.index'))
         else:
-            response = "Can't purchase tickets for event at the current time"
+            response = "Can't purchase tickets for this event at the current time"
             
 
         
@@ -251,7 +251,7 @@ def make_event():
             return render_template("create_event.html", data = "Please fill in all boxes", pers=persistant_usr())
 
         elif (a):
-            new_event = Event(title=ename, data=descript, img=URL, status=status, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
+            new_event = Event(title=ename, data=descript, img=URL, status=status, category=category, tickets=ntickets, date=DOE, ticketcost=cost, location=location, user_id=cur_user)
             db.session.add(new_event)
             db.session.commit()
             print('Event created or Updated!')

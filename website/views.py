@@ -86,6 +86,7 @@ def index():
             print("used categories")
             print(cat)
             search = cat.lower()
+            
         searched = True
 
         if search == None:
@@ -126,11 +127,14 @@ def index():
         if (eventdata != None):
             
             if searched == True:
-                
+                x = 0
+                y = 0
+                z = 0
                 whythislate = re.findall(search, eventdata.category.lower())
-                x = re.findall(search, eventdata.title.lower())
-                y = re.findall(search, eventdata.location.lower())
-                z = re.findall(search, eventdata.data.lower())
+                if cat == "None":
+                    x = re.findall(search, eventdata.title.lower())
+                    y = re.findall(search, eventdata.location.lower())
+                    z = re.findall(search, eventdata.data.lower())
                 
                 if(x) or (y) or (z) or (whythislate):
                         
@@ -219,14 +223,15 @@ def book_ticket():
     if get != None:
         datamaxid = get.id
 
+    print(datamaxid)
     i = 1
     
 
     while i <= datamaxid:
-        if datamaxid != None:
-
-            eventdata = Event.query.filter_by(id=i).first()
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
+        
+        eventdata = Event.query.filter_by(id=i).first()
+        if eventdata != None:            
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, "0", "0", "0", "0", "0", "0") #0 = unused parameter so there is no need to actually assing them        
             Levent.append(payload)
 
         i = i + 1

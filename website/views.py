@@ -16,7 +16,7 @@ usrinfo = ['Login or Register','','\login']
 
 
 class IDV_Event:
-    def __init__(self, EID, title, location, cost, desc, img, date, status, side):
+    def __init__(self, EID, title, location, cost, desc, img, date, status, side, category):
         self.EID = EID
         self.title = title
         self.location = location
@@ -26,6 +26,7 @@ class IDV_Event:
         self.date = date
         self.status = status
         self.side = side
+        self.category = category
 
 Levent=[]
 

@@ -340,10 +340,12 @@ a:hover{
 input[type=text], select {
   padding: 12px 10px;
   margin: 8px 0;
-  width: 80%;
+  width: 35%;
   border: 1px solid black;
   border-radius: 4px;
   box-sizing: border-box;
+  margin-right: 12px;
+
 }
 
 html .maininfo{

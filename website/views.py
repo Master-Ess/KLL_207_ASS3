@@ -80,7 +80,12 @@ def index():
     response = ""
     if request.method == 'POST':
         search = str(request.form.get("search"))
+        cat = str(request.form.get("category"))
         search = search.lower()
+        if cat != "None":
+            print("used categories")
+            print(cat)
+            search = cat.lower()
         searched = True
 
         if search == None:
@@ -105,6 +110,8 @@ def index():
     get = Event.query.order_by(Event.id.desc()).first()
     if get != None:
         datamaxid = get.id
+
+
                 
     Levent=[]
     i = 1
@@ -112,33 +119,39 @@ def index():
     
     
     while i <= datamaxid:
-        eventdata = None
+        
+            
         eventdata = Event.query.filter_by(id=i).first()
-        if searched == True:
+        
+        if (eventdata != None):
             
-            x = re.findall(search, eventdata.title.lower())
-            y = re.findall(search, eventdata.location.lower())
-            z = re.findall(search, eventdata.data.lower())
-            
-            if(x) or (y) or (z):
-                    
-                side = "right"
-                if (s % 2) == 0:
-                    side = "left"
-                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
-                Levent.append(payload)
-                s = s + 1
+            if searched == True:
                 
-            i = i + 1    
-        else:
-            if (eventdata != None):
-                side = "right"
-                if (s % 2) == 0:
-                    side = "left"
-                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
-                Levent.append(payload)
-                s = s + 1
-            i = i + 1
+                whythislate = re.findall(search, eventdata.category.lower())
+                x = re.findall(search, eventdata.title.lower())
+                y = re.findall(search, eventdata.location.lower())
+                z = re.findall(search, eventdata.data.lower())
+                
+                if(x) or (y) or (z) or (whythislate):
+                        
+                    side = "right"
+                    if (s % 2) == 0:
+                        side = "left"
+                    payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
+                    Levent.append(payload)
+                    s = s + 1
+                    
+                 
+            else:
+                if (eventdata != None):
+                    side = "right"
+                    if (s % 2) == 0:
+                        side = "left"
+                    payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
+                    Levent.append(payload)
+                    s = s + 1
+                
+        i = i + 1
     fixer = "none"
     if s == 1:
         fixer = "extra"

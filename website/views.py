@@ -122,7 +122,7 @@ def index():
                 side = "right"
                 if (s % 2) == 0:
                     side = "left"
-                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side)        
+                payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
                 Levent.append(payload)
                 s = s + 1
                 
@@ -132,7 +132,7 @@ def index():
             side = "right"
             if (s % 2) == 0:
                 side = "left"
-            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side)        
+            payload = IDV_Event(i, eventdata.title, eventdata.location, eventdata.ticketcost, eventdata.data, eventdata.img, eventdata.date, eventdata.status, side, eventdata.category)        
             Levent.append(payload)
             s = s + 1
             i = i + 1

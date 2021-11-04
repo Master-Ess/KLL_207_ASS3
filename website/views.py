@@ -174,11 +174,11 @@ def book_ticket():
             if status == "Booked":
                 response="Selected  event is fully booked"
             else:
-                response="Please enter a number of tickets that is equal or less than the avalible ammount"
+                response="Please enter a number of tickets that is equal or less than the avalible amount"
 
             return render_template('book_tickets.html', passevent=Levent, response = response, pers=persistant_usr())
 
-        if status == "Upcomming":
+        if status == "Upcoming":
             new_purchase = Purchase(user_id=cur_user,event_id=targetevent,notickets=ntickets,cost=cost)
             db.session.add(new_purchase)
             E = eventdata.tickets
